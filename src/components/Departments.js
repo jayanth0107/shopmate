@@ -1,33 +1,41 @@
-
 import React from 'react';
+import { connect } from 'react-redux';
+import { selectDepartment } from '../actions';
 
 class Departments extends React.Component {
-    state = {};
+    state = {}; 
 
-    //Fetch all the departments in this lifecycle ethods.
-    function componentDidMount()  {
-        this.props.getAllDepartments();
+    componentDidMount(){
+        this.props.selectDepartment();
     }
 
-    render(){
-        this.props.departmnetList
+    renderList(){
+        return this.props.departments.map(department => {
+            return(
+                <div className="item" key={department.department_id}>
+                    <i className="large middle aligned icon user" />
 
-        //render component based on teh above value
+                    <div className="content">
+                        <p> {department.name} </p>
+                    </div>
+                </div>
+            )
+        })
+    }
+
+    render(){  
+        //console.log(this.props.departments);
         return (
-            <div>Departments</div>
+            <div className="relaxed divided list">
+                <h1>SHOPMATE</h1>
+                {this.renderList()}
+            </div>
         )
     }
-
-    function mapStateToProps(state) {
-        return 
-        {
-            departmentList : this.state.getDepartmentList
-        }
-
-        
-    }
-
-
 }
 
-export default connect Departments ;
+const mapStateToProps = (state) => {
+    return { departments: state.departments };
+}
+
+export default connect(mapStateToProps, { selectDepartment })(Departments);
