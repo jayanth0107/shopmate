@@ -3,15 +3,12 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Home from './navigation/Home';
 import ShoppingCart from './navigation/ShoppingCart';
 import ShippingAddress from './navigation/ShippingAddress';
-
-import { selectedDepartment, selectedCategory } from '../actions';
+import '../css/App.css';
 
 import Header from './Header';
 import Departments from './Departments';
 import SearchBar from './SearchBar';
 import Categories from './Categories';
-
-
 
 const App = () => {
     return (
@@ -25,15 +22,11 @@ const App = () => {
                         <SearchBar />
                     </div>
 
-                    <div className="ui container grid">
-                        <div className="ui row">
-                            <div className="column five wide">
-                                <Categories />
-                            </div>
-                            <div className="column eleven wide">
+                    <div className={`maindiv`}>
+                        <Categories />
+                            <div >
                                 Shirt LIst
                             </div>                        
-                        </div>
                     </div>
                     
                     <Route path="/navigation/home" exact component={ Home } />

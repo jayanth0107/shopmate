@@ -8,6 +8,7 @@ const Header = () => {
                 Hi Sign in or Register
             </Link>
             <div className="right menu">
+                <i className="shopping bag icon big"></i>
                 <Link to="/" className="item">
                     Your Bag
                  </Link>

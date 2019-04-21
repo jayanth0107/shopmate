@@ -6,10 +6,9 @@ export const selectDepartment = () =>  async dispatch => {
         dispatch( {type: 'SELECTED_DEPARTMENT', payload: response.data });
 };
 
-export const selectCategory = () => {
-    return {
-        type: 'SELECTED_CATEGORY',
-        payload: ''
-    };
+export const selectCategory = () => async dispatch => {
+        const response = await backendApi.get('/categories');
+        
+        dispatch({type: 'SELECTED_CATEGORY', payload: response.data.rows });   
 };
 

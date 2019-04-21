@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { selectDepartment } from '../actions';
+import '../css/Departments.css';
 
 class Departments extends React.Component {
     state = {}; 
@@ -12,13 +13,9 @@ class Departments extends React.Component {
     renderList(){
         return this.props.departments.map(department => {
             return(
-                <div className="item" key={department.department_id}>
-                    <i className="large middle aligned icon user" />
-
-                    <div className="content">
-                        <p> {department.name} </p>
-                    </div>
-                </div>
+            <div className="ui item menu" key={department.department_id}>
+                <a className="item">{department.name} </a>
+            </div>
             )
         })
     }
@@ -26,9 +23,21 @@ class Departments extends React.Component {
     render(){  
         //console.log(this.props.departments);
         return (
-            <div className="relaxed divided list">
-                <h1>SHOPMATE</h1>
-                {this.renderList()}
+            <div className="ui secondary menu" >
+                <div className="ui red label">
+                    <h1 className={`logo`}>SHOPMATE</h1>
+                </div>
+                <div className="item">
+                    {this.renderList()}
+                </div>
+                <div className="right menu">
+                    <div className="item">
+                        <div className="ui icon input">
+                            <input type="text" placeholder="Search..." />
+                            <i className="search link icon"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
