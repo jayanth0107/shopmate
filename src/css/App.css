@@ -1,3 +1,7 @@
 .maindiv{
     height: 80vh;
 }
+
+.appdiv{
+    width: 94vw !important;
+}

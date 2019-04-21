@@ -9,13 +9,13 @@ import Header from './Header';
 import Departments from './Departments';
 import SearchBar from './SearchBar';
 import Categories from './Categories';
+import ProductList from './ProductList';
 
 const App = () => {
     return (
-        <div className="ui container">
-            Jayanth React project deployed globally - Test
+        <div className={`appdiv ui container`}>
             <BrowserRouter>
-                <div className="ui container">
+                <div>
                     <Header />
                     <div>
                         <Departments />
@@ -23,10 +23,16 @@ const App = () => {
                     </div>
 
                     <div className={`maindiv`}>
-                        <Categories />
-                            <div >
-                                Shirt LIst
-                            </div>                        
+                        <div className="ui bottom attached segment pushable">
+                            <div className="ui visible inverted left vertical sidebar menu">
+                                <Categories />       
+                            </div>
+                            <div className="pusher">
+                                <div className="ui basic segment">
+                                    <ProductList />                          
+                                </div>
+                            </div> 
+                        </div>                                                
                     </div>
                     
                     <Route path="/navigation/home" exact component={ Home } />
