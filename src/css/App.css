@@ -5,3 +5,12 @@
 .appdiv{
     width: 94vw !important;
 }
+
+.leftSideBar{
+    position: relative !important;
+}
+
+.listHeight{
+    height: 75vh;
+    overflow-y: scroll;
+}

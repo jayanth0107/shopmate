@@ -21,7 +21,7 @@ class ProductList extends React.Component {
                     <div className="content">
                         <div className="center aligned header">{product.name}</div>                 
                         <div className="ui tag labels">
-                            <a className={`ui left large floated label`}>${product.price}</a>
+                            <a className={`ui left large floated label`} style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: 'black'}}>${product.price}</a>
                             <a className="ui red label large right floated">${product.discounted_price}</a>
                         </div>
                         <div className="description">
@@ -37,7 +37,7 @@ class ProductList extends React.Component {
         //console.log(this.props.products); //returns only 20
         
         return (
-            <div className={`cardList`}>                    
+            <div className={`ui cards cardList`}>                    
                     {this.renderList()}                                    
             </div>
                 

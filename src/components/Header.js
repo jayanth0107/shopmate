@@ -5,7 +5,6 @@ import {
   Form,
   Grid,
   Header,
-  Image,
   Message,
   Segment,
   Modal
@@ -28,7 +27,7 @@ class ShopMateHeader extends React.Component {
   }
 
   render() {
-    console.log("-----", this.state);
+    //console.log("-----", this.state);
     return (
       <div>
         <div className="ui secondary pointing menu">

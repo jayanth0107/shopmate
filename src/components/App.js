@@ -22,18 +22,34 @@ const App = () => {
                         <SearchBar />
                     </div>
 
-                    <div className={`maindiv`}>
-                        <div className="ui bottom attached segment pushable">
-                            <div className="ui visible inverted left vertical sidebar menu">
+                    {/* <div className="ui visible left vertical sidebar menu">
                                 <Categories />       
                             </div>
-                            <div className="pusher">
+                            
+                            
                                 <div className="ui basic segment">
                                     <ProductList />                          
+                                </div> */}
+                           
+                         
+
+                        <div className="ui grid">
+                            <div className="three wide column">
+                                <div className={`ui visible inverted left vertical sidebar fixed menu leftSideBar`}>
+                                    <Categories /> 
                                 </div>
-                            </div> 
-                        </div>                                                
-                    </div>
+                            </div>
+                            <div className="thirteen wide stretched column">
+                                <div className={`ui segment listHeight`}>
+                                    <ProductList />  
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                            
+                        
+
                     
                     <Route path="/navigation/home" exact component={ Home } />
                     <Route path="/navigation/cart" exact component={ ShoppingCart } />
