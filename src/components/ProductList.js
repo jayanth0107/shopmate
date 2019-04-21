@@ -14,20 +14,20 @@ class ProductList extends React.Component {
 
         return this.props.products.map(product => {
             return(  
-                <div className="card">
-                    <div className="content">
-                        <div className="header">{product.name}</div>                    
-                    </div>              
+                <div key={product.product_id} className={`ui card`}>                                  
                     <div className="image">
                         <img alt={product.name} src={'https://backendapi.turing.com/images/products/' + product.thumbnail}/>
                     </div>  
-                    <div className="ui tag labels">
-                        <a className="ui red label">${product.price}</a>
-                        <a className="ui strikethrough label">${product.discounted_price}</a>
+                    <div className="content">
+                        <div className="center aligned header">{product.name}</div>                 
+                        <div className="ui tag labels">
+                            <a className={`ui left large floated label`}>${product.price}</a>
+                            <a className="ui red label large right floated">${product.discounted_price}</a>
+                        </div>
+                        <div className="description">
+                            {product.description}
+                        </div> 
                     </div>
-                    <div className="description">
-                        {product.description}
-                    </div> 
                 </div>                  
             )
         })
@@ -37,7 +37,7 @@ class ProductList extends React.Component {
         //console.log(this.props.products); //returns only 20
         
         return (
-            <div className="ui link cards">                    
+            <div className={`cardList`}>                    
                     {this.renderList()}                                    
             </div>
                 
