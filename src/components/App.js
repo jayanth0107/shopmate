@@ -14,9 +14,11 @@ import Pagination from './Pagination';
 
 class App extends React.Component {
 
-  state = {data:'',pageInfo:''}; 
-  render() {
+  state = {data:'',pageInfo:''};   
 
+  render() {    
+
+    
     return (
         <div className={`appdiv ui container`}>
             <BrowserRouter>
@@ -26,10 +28,10 @@ class App extends React.Component {
                     
                     <div className={`ui pagination menu pageDiv`}>
                         <div className={`categoryText`}>Categories</div >
-                        <div className={`pageButtonStart`}>
+                        <div className={`pageNoStart`}>
                                 <Pagination />
                         </div>                        
-                    </div>    
+                    </div>                   
 
                     <div className="ui grid">
                         <div className="two wide column">

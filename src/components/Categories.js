@@ -7,12 +7,28 @@ class Categories extends React.Component {
     state = {};   
 
     componentDidMount(){
-        this.props.selectCategory();
+        
+        this.props.selectCategory();  
+
     }
 
-    onCategoryClick = (category_id) => {
+    onCategoryClick = (event, category_id) => {
         //console.log(this.props);
+        var siblings = [];
+        var sibling = event.currentTarget.parentNode.firstChild;
+        //console.log(sibling);
+        while (sibling) {
+            if (sibling.nodeType === 1) {
+                siblings.push(sibling);
+            }
+            
+            sibling.className = 'item';
+            sibling = sibling.nextSibling;
+        }
+        console.log(siblings);
+        //console.log(i);
         this.props.selectProductFromCategory(category_id,1);
+        event.currentTarget.className = 'item active';
     }
 
     render(){  
@@ -20,7 +36,7 @@ class Categories extends React.Component {
         return (
             this.props.categories.map(category => {
                 return(
-                    <li className="item" key={category.category_id} onClick = {() => this.onCategoryClick(category.category_id)}>
+                    <li className="item" key={category.category_id} onClick = {(event) => this.onCategoryClick(event, category.category_id)}>
                             {category.name}
                     </li> 
                 )

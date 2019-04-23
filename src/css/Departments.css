@@ -17,7 +17,8 @@
 li:hover {
     text-decoration: underline !important;
     text-decoration-color: red !important;
-    color:red !important;
+    color:white !important;
+    background-color:red !important;
 }
 
 .departmentBar {

@@ -10,7 +10,7 @@ class SearchBar extends React.Component {
         return (
             <div className="item">
                         <div className="ui icon input">
-                            <input type="text" placeholder="Search..." />
+                            <input type="text" placeholder="Search Anything ..." />
                             <i className="search link icon"></i>
                         </div>
             </div>

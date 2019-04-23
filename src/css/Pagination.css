@@ -1,3 +1,8 @@
 .pageItem{
     cursor:pointer;
 }
+
+.active{
+    color:white !important;
+    background-color:red !important;
+}
