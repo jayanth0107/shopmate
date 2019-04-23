@@ -20,12 +20,10 @@ class Departments extends React.Component {
 
     renderList(){
         return this.props.departments.map(department => {
-            return(
-            <div className="ui item menu" key={department.department_id}>
-                <li className="item" onClick = {() => this.onDepartmentClick(department.department_id)}>
+            return(            
+                <li key={department.department_id} className={`ui pointing item departmentName`} onClick = {() => this.onDepartmentClick(department.department_id)}>
                     {department.name} 
-                </li>
-            </div>
+                </li>           
             )
         })
     }
@@ -33,13 +31,13 @@ class Departments extends React.Component {
     render(){  
         //console.log(this.props.departments);
         return (
-            <div className="ui secondary menu" >
-                <div className="ui red label">
-                    <h1 className={`logo`}>SHOPMATE</h1>
+            <div className={`ui pointing menu departmentBar`} >
+                <div className={`ui label logo`}>
+                    <h1 className={`logoText`}>SHOPMATE</h1>
                 </div>
-                <div className="item">
+                <span className={`departmentText`}>
                     {this.renderList()}
-                </div>
+                </span>
                 <div className="right menu">
                     <SearchBar />
                 </div>

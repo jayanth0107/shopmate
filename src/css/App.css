@@ -1,13 +1,10 @@
-.maindiv{
-    height: 80vh;
-}
-
 .appdiv{
     width: 94vw !important;
 }
 
 .leftSideBar{
     position: relative !important;
+    cursor: pointer;
 }
 
 .listHeight{
@@ -16,7 +13,23 @@
 }
 
 .pageDiv{
-    margin-left: 42vw !important;
-    margin-top: 7px !important;
-    margin-bottom: 7px !important;
+    margin-top: -0.5% !important;
+    margin-bottom: 0.25% !important;
+    border:none !important;
+    box-shadow: 0px !important;
+    -webkit-box-shadow: 0px !important;
+}
+
+.categoryText{
+    font-size: 2em;
+    margin-top: 1%;
+    border-bottom: 3px solid red;
+}
+
+.pageButtonStart{
+    padding-left: 45em;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0px !important;
+    -webkit-box-shadow: 0px !important;
 }

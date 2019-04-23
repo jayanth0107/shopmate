@@ -3,7 +3,25 @@
     height: 70vh;
 }
 
-.cardList {
-    
+.productCard {
+    width: 17.7% !important;
+    margin: 2% 3% 2% 4% !important;
 }
 
+.priceDiv{
+    margin-left: -3%; 
+    margin-right: -13%;
+}
+
+.priceTag {
+    margin-left: 6% !important;
+}
+
+.discountPriceTag {
+    margin-left: 17% !important;
+}
+
+.productName{
+    margin-bottom: 2%;
+    margin-top: -3% !important;
+}

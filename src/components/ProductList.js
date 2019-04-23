@@ -14,15 +14,15 @@ class ProductList extends React.Component {
 
         return this.props.products && this.props.products.map(product => {
             return(  
-                <div key={product.product_id} className={`ui card`}>                                  
+                <div key={product.product_id} className={`ui card productCard`}>                                  
                     <div className="image">
                         <img alt={product.name} src={'https://backendapi.turing.com/images/products/' + product.thumbnail}/>
                     </div>  
                     <div className="content">
-                        <div className="center aligned header">{product.name}</div>                 
-                        <div className="ui tag labels">
-                            <a className={`ui left large floated label`} style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: 'black'}}>${product.price}</a>
-                            <a className="ui red label large right floated">${product.discounted_price}</a>
+                        <div className={`center aligned header productName`}>{product.name}</div>                 
+                        <div className={`ui tag labels priceDiv`}>
+                            <a className={`ui left large floated label priceTag`} style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: 'black'}}>${product.price}</a>
+                            <a className={`ui red right large floated label discountPriceTag`}>${product.discounted_price}</a>
                         </div>
                         <div className="description">
                             {product.description}

@@ -1,3 +1,33 @@
-.logo{
-    padding-top: 15px;
+.logo {
+    background-color: black !important;
+}
+
+.logoText {
+    font-size: 3.1em;
+    color:red;   
+}
+
+.departmentName {
+    margin-left: 1%;
+    color: white !important;
+    font-size: 1.25em;
+    cursor: pointer;
+}
+
+li:hover {
+    text-decoration: underline !important;
+    text-decoration-color: red !important;
+    color:red !important;
+}
+
+.departmentBar {
+    background-color: black !important;
+    padding-left: 2%;
+    margin-left: -1% !important;
+}
+
+.departmentText {
+    display: flex;
+    flex-direction: row;
+    padding-left: 17% !important;
 }

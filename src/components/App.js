@@ -21,18 +21,19 @@ class App extends React.Component {
         <div className={`appdiv ui container`}>
             <BrowserRouter>
                 <div>
-                    <Header />
-                    <div>
-                        <Departments />                        
-                    </div>
-
+                    <Header />                    
+                    <Departments />                              
+                    
                     <div className={`ui pagination menu pageDiv`}>
-                        <Pagination />
+                        <div className={`categoryText`}>Categories</div >
+                        <div className={`pageButtonStart`}>
+                                <Pagination />
+                        </div>                        
                     </div>    
 
                     <div className="ui grid">
                         <div className="three wide column">
-                            <div className={`ui visible inverted left vertical sidebar fixed menu leftSideBar`}>
+                            <div className={`ui visible left vertical sidebar fixed menu leftSideBar`}>
                                   <Categories /> 
                             </div>
                         </div>
@@ -41,7 +42,7 @@ class App extends React.Component {
                                     <ProductList />  
                             </div>
                         </div>
-                    </div>                          
+                    </div>                         
                         
 
                     

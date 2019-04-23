@@ -28,10 +28,11 @@ class Pagination extends React.Component {
         return (
             
             pages.map((page, index) =>                 
-                    
-                    <button key={index} className={`item`} onClick = {() => this.onPageClick(page)}>
+                
+                    <li key={index} className='item'  onClick = {() => this.onPageClick(page)}>
                                 {page}
-                    </button>                 
+                    </li>   
+                             
             )
         )
     }
