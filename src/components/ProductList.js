@@ -16,7 +16,7 @@ class ProductList extends React.Component {
             return(  
                 <div key={product.product_id} className={`ui card productCard`}>                                  
                     <div className="image">
-                        <img alt={product.name} src={'https://backendapi.turing.com/images/products/' + product.thumbnail}/>
+                        <img className={`productImage`} alt={product.name} src={'https://backendapi.turing.com/images/products/' + product.thumbnail}/>
                     </div>  
                     <div className="content">
                         <div className={`center aligned header productName`}>{product.name}</div>                 

@@ -18,7 +18,9 @@ class Pagination extends React.Component {
 
     render(){  
         //console.log(this.props.departments);
-        const pageCount = Math.ceil(this.props.count / 20); // 20 product cards per page
+        
+        const noOfProductsPerPage = 20;  // 20 product cards per page
+        const pageCount = Math.ceil(this.props.count / noOfProductsPerPage);
         
         let pages = [];
         for(let i=1 ; i<= pageCount; i++) {

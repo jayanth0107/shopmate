@@ -5,11 +5,15 @@
 .leftSideBar{
     position: relative !important;
     cursor: pointer;
+    font-size: 1.2em !important;
+    margin-top: 5% !important;
+    font-weight: bold !important;
 }
 
 .listHeight{
     height: 75vh;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .pageDiv{
@@ -21,15 +25,16 @@
 }
 
 .categoryText{
-    font-size: 2em;
-    margin-top: 1%;
+    font-size: 1.8em;
+    margin-top: 6%;
     border-bottom: 3px solid red;
+    box-shadow: 0px !important;
 }
 
 .pageButtonStart{
-    padding-left: 45em;
+    position: absolute;
+    left: 50%;
     display: flex;
     flex-direction: row;
-    box-shadow: 0px !important;
-    -webkit-box-shadow: 0px !important;
+    cursor: pointer;
 }

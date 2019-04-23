@@ -32,13 +32,13 @@ class App extends React.Component {
                     </div>    
 
                     <div className="ui grid">
-                        <div className="three wide column">
-                            <div className={`ui visible left vertical sidebar fixed menu leftSideBar`}>
+                        <div className="two wide column">
+                            <div className={`ui secondary vertical menu leftSideBar`}>
                                   <Categories /> 
                             </div>
                         </div>
-                        <div className="thirteen wide stretched column">
-                            <div className={`ui segment listHeight`}>
+                        <div className="fourteen wide stretched column">
+                            <div className={`listHeight`}>
                                     <ProductList />  
                             </div>
                         </div>

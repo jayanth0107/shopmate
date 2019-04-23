@@ -25,3 +25,9 @@
     margin-bottom: 2%;
     margin-top: -3% !important;
 }
+
+.productImage{
+    height: 100% !important;
+    width: 69% !important;
+    margin-left: 16%;
+}
