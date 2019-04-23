@@ -1,8 +1,12 @@
-export default (state = [], action) => {
+export default (state = {data:[], depId:'', catId:''}, action) => {
 
     switch(action.type) {
         case 'SELECTED_PRODUCT':
-                return action.payload;  
+                return {
+                    data: action.payload, 
+                    departmentId: action.departmentId,
+                    categoryId: action.cateogryId,
+                };  
         default:
                 return state;
     }

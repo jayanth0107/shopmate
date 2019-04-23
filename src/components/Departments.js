@@ -1,20 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectDepartment } from '../actions';
+import { selectDepartment, selectCategoryFromDepartment, selectProductFromDepartment } from '../actions';
 import '../css/Departments.css';
+import SearchBar from './SearchBar';
+
 
 class Departments extends React.Component {
-    state = {}; 
+    state = {data:'',pageInfo:''}; ; 
 
     componentDidMount(){
         this.props.selectDepartment();
+    }
+
+    onDepartmentClick = (department_id) => {
+        //console.log(this.props);
+        this.props.selectCategoryFromDepartment(department_id);   
+        this.props.selectProductFromDepartment(department_id,1);
     }
 
     renderList(){
         return this.props.departments.map(department => {
             return(
             <div className="ui item menu" key={department.department_id}>
-                <a className="item">{department.name} </a>
+                <li className="item" onClick = {() => this.onDepartmentClick(department.department_id)}>
+                    {department.name} 
+                </li>
             </div>
             )
         })
@@ -31,12 +41,7 @@ class Departments extends React.Component {
                     {this.renderList()}
                 </div>
                 <div className="right menu">
-                    <div className="item">
-                        <div className="ui icon input">
-                            <input type="text" placeholder="Search..." />
-                            <i className="search link icon"></i>
-                        </div>
-                    </div>
+                    <SearchBar />
                 </div>
             </div>
         )
@@ -44,7 +49,8 @@ class Departments extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    //console.log(state);
     return { departments: state.departments };
 }
 
-export default connect(mapStateToProps, { selectDepartment })(Departments);
+export default connect(mapStateToProps, { selectDepartment, selectCategoryFromDepartment, selectProductFromDepartment })(Departments);

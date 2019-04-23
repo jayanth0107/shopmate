@@ -14,3 +14,9 @@
     height: 75vh;
     overflow-y: scroll;
 }
+
+.pageDiv{
+    margin-left: 42vw !important;
+    margin-top: 7px !important;
+    margin-bottom: 7px !important;
+}

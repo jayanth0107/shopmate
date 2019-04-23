@@ -4,50 +4,44 @@ import Home from './navigation/Home';
 import ShoppingCart from './navigation/ShoppingCart';
 import ShippingAddress from './navigation/ShippingAddress';
 import '../css/App.css';
+import { connect } from 'react-redux';
 
 import Header from './Header';
 import Departments from './Departments';
-import SearchBar from './SearchBar';
 import Categories from './Categories';
 import ProductList from './ProductList';
+import Pagination from './Pagination';
 
-const App = () => {
+class App extends React.Component {
+
+  state = {data:'',pageInfo:''}; 
+  render() {
+
     return (
         <div className={`appdiv ui container`}>
             <BrowserRouter>
                 <div>
                     <Header />
                     <div>
-                        <Departments />
-                        <SearchBar />
+                        <Departments />                        
                     </div>
 
-                    {/* <div className="ui visible left vertical sidebar menu">
-                                <Categories />       
-                            </div>
-                            
-                            
-                                <div className="ui basic segment">
-                                    <ProductList />                          
-                                </div> */}
-                           
-                         
+                    <div className={`ui pagination menu pageDiv`}>
+                        <Pagination />
+                    </div>    
 
-                        <div className="ui grid">
-                            <div className="three wide column">
-                                <div className={`ui visible inverted left vertical sidebar fixed menu leftSideBar`}>
-                                    <Categories /> 
-                                </div>
-                            </div>
-                            <div className="thirteen wide stretched column">
-                                <div className={`ui segment listHeight`}>
-                                    <ProductList />  
-                                </div>
+                    <div className="ui grid">
+                        <div className="three wide column">
+                            <div className={`ui visible inverted left vertical sidebar fixed menu leftSideBar`}>
+                                  <Categories /> 
                             </div>
                         </div>
-
-                        
-                            
+                        <div className="thirteen wide stretched column">
+                            <div className={`ui segment listHeight`}>
+                                    <ProductList />  
+                            </div>
+                        </div>
+                    </div>                          
                         
 
                     
@@ -58,7 +52,12 @@ const App = () => {
             
             </BrowserRouter>
         </div>
-    );
+     );
+   }
 };
 
-export default App;
+const mapStateToProps = (state) => {
+    return {data:'',pageInfo:''};
+}
+
+export default connect(mapStateToProps)(App);

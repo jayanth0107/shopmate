@@ -1,18 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectProduct } from '../actions';
+import { selectProduct, selectProductFromCategory, selectProductFromDepartment } from '../actions';
 import '../css/ProductList.css';
 
 class ProductList extends React.Component {
-    state = {}; 
+    state = {data:[],pageInfo:[]}; 
 
     componentDidMount(){
-        this.props.selectProduct();
+        this.props.selectProduct(1); // 1 is the first page
     }
 
     renderList(){
 
-        return this.props.products.map(product => {
+        return this.props.products && this.props.products.map(product => {
             return(  
                 <div key={product.product_id} className={`ui card`}>                                  
                     <div className="image">
@@ -46,7 +46,8 @@ class ProductList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { products: state.products };
+    //console.log(state.products.data.rows);
+    return { products: state.products.data.rows, productCount: state.products.data.count };
 }
 
-export default connect(mapStateToProps, { selectProduct })(ProductList);
+export default connect(mapStateToProps, { selectProduct, selectProductFromCategory, selectProductFromDepartment })(ProductList);

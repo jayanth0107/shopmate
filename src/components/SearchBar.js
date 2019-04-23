@@ -8,8 +8,11 @@ class SearchBar extends React.Component {
 
         //render component based on teh above value
         return (
-            <div>
-                SearchBar                
+            <div className="item">
+                        <div className="ui icon input">
+                            <input type="text" placeholder="Search..." />
+                            <i className="search link icon"></i>
+                        </div>
             </div>
         )
     }
