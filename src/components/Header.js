@@ -87,7 +87,7 @@ class ShopMateHeader extends React.Component {
                     </Segment>
                   </Form>
                   <Message>
-                    New to us? <a href="#">Sign Up</a>
+                    New to us? <button href="#">Sign Up</button>
                   </Message>
                 </Grid.Column>
               </Grid>

@@ -35,3 +35,11 @@
 .productCard:hover {
     box-shadow: 0 0 100px rgba(33,33,33,.2) !important;
   }
+
+  .ui.dimmer{
+    background-color: transparent !important;
+  }
+
+  .ui.active.dimmer{
+    background-color: transparent !important;
+  }

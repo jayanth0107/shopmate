@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectProduct, selectProductFromCategory, selectProductFromDepartment, searchProduct } from '../actions';
+import { selectProduct, selectProductFromCategory, selectProductFromDepartment, searchProduct, openModal } from '../actions';
 import '../css/ProductList.css';
-import Modal from './Modal';
-import history from './history';
+import ModalManager from './ModalManager';
 
 class ProductList extends React.Component {
-    state = {data:[], depId:'', catId:''}; 
+    state = {data:[], depId:'', catId:'',isOpen: false}; 
 
     constructor(props){
-        super(props);
+        super(props);        
         this.searchingFor = this.searchingFor.bind(this);
     }
 
@@ -17,7 +16,7 @@ class ProductList extends React.Component {
         this.props.selectProduct(1); // 1 is the first page        
     } 
     
-     searchingFor(searchTerm){
+    searchingFor(searchTerm){
         return function(x){
             return x.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                     x.description.toLowerCase().includes(searchTerm.toLowerCase()) || !searchTerm;
@@ -38,20 +37,18 @@ class ProductList extends React.Component {
             finalProductList = this.props.products;
         }
         
-        return finalProductList.map(product => {            
-            //console.log(this.props.products);
-            const actions = (
-                // <React.Fragment>
-
-                <div> 
-                    <button className="ui button negative">Delete</button>
-                </div>
-
-                // </React.Fragment>
-                
-            );
+        return finalProductList.map(product => { 
             return(  
-                <div key={product.product_id} className={`ui card productCard`} >                                  
+                <div key={product.product_id} className={`ui card productCard`} 
+                            onClick = {() => this.props.openModal({
+                                name: product.name, 
+                                description: product.description,
+                                price: product.price,
+                                discounted_price: product.discounted_price,
+                                thumbnail: product.thumbnail, 
+                                id:product.product_id
+                            })}>    
+                    <ModalManager />                              
                     <div className="image">
                         <img className={`productImage`} alt={product.name} src={'https://backendapi.turing.com/images/products/' + product.thumbnail}/>
                     </div>  
@@ -65,7 +62,10 @@ class ProductList extends React.Component {
                             {product.description}
                         </div> 
                     </div>
-                    {/* <Modal title={product.name} content={product.description} actions={actions} onDismiss={() => history.push('/navigation/cart ')}/>   */}
+                    
+                    {/* <Modal title={product.name} content={product.description} actions={actions} onDismiss={() => history.push('/')}/>   */}
+                   
+                    
                 </div>             
             )
         })
@@ -73,13 +73,10 @@ class ProductList extends React.Component {
     }
 
     render(){
-        //console.log(this.props.products); //returns only 20         
-        
         return (
             <div className={`ui cards cardList`}>                    
                     {this.renderList()}                                    
-            </div>
-                
+            </div>                
         )
     }
 }
@@ -91,4 +88,4 @@ const mapStateToProps = (state) => {
      
 }
 
-export default connect(mapStateToProps, { selectProduct, selectProductFromCategory, selectProductFromDepartment, searchProduct })(ProductList);
+export default connect(mapStateToProps, { selectProduct, selectProductFromCategory, selectProductFromDepartment, searchProduct, openModal })(ProductList);

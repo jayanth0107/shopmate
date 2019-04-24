@@ -1,5 +1,5 @@
 import backendApi from '../apis/backendApi';
-import { SELECTED_CATEGORY , SELECTED_DEPARTMENT, SELECTED_PRODUCT, SEARCH} from './types';
+import { SELECTED_CATEGORY , SELECTED_DEPARTMENT, SELECTED_PRODUCT, SEARCH, MODAL_OPEN, MODAL_CLOSE} from './types';
 
 export const selectDepartment = () =>  async dispatch => {
     const response = await backendApi.get('/departments');
@@ -41,3 +41,16 @@ export const searchProduct = (searchTerm) => {
     
     return {type: SEARCH,  searchTerm: searchTerm };
 };
+
+export function openModal(modalProps) {
+    return {
+      type: MODAL_OPEN,
+      payload: modalProps
+    };
+};
+  
+export function closeModal() {
+    return {
+      type: MODAL_CLOSE 
+    };
+}

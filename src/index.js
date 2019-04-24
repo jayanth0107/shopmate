@@ -5,13 +5,13 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
 import App from './components/App';
-import reducers from './reducers';
+import rootReducer from './reducers';
 
 import { BrowserRouter } from 'react-router-dom';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
-    reducers, composeEnhancers(applyMiddleware(thunk))
+    rootReducer, composeEnhancers(applyMiddleware(thunk))
 );
 
 ReactDOM.render( 
@@ -24,3 +24,5 @@ ReactDOM.render(
     , 
     document.querySelector('#root')
 );
+
+export default createStore(rootReducer);

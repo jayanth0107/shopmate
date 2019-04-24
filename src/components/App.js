@@ -1,31 +1,36 @@
 import React from 'react';
+import { connect } from "react-redux";
 
 import '../css/App.css';
 
-import Header from './Header';
+import Headers from './Header';
 import Footer from './Footer';
 import ContentPage from './RouterPage';
 import Departments from './Departments';
 
-const App = () => {
-    
-    return (
-        <div className={`appdiv ui container`}>
-            
-                <div>
+import { openModal } from "../actions";
 
-                    <Header /> 
-                    <Departments /> 
-                    <ContentPage/> 
-                    <Footer />                
-                    
-                </div>
-            
-            
-        </div>
-     );
+class App extends React.Component {
+    
+    render() {
+        return (
+            <div className={`appdiv ui container`}>
+                
+                    <div>
+
+                        <Headers /> 
+                        <Departments /> 
+                        <ContentPage/> 
+                        <Footer />                            
+                        
+                    </div>
+                
+                
+            </div>
+        );
+    }
    
 };
 
 
-export default App;
+export default connect(null, { openModal })(App);
