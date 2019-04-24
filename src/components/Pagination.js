@@ -5,9 +5,23 @@ import { selectProduct, selectProductFromCategory, selectProductFromDepartment }
 
 class Pagination extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.searchingFor = this.searchingFor.bind(this);
+    }
+
     componentDidUpdate(){
-         document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';         
+        if(!document.getElementsByClassName('pageNoStart')[0])
+            document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';         
       }
+
+    searchingFor(term){
+        return function(x){
+            return x.name.toLowerCase().includes(term.toLowerCase()) || !term;
+        }
+    }
+
+    
 
     onPageClick = (event, pageNo) => {
         
@@ -39,32 +53,63 @@ class Pagination extends React.Component {
     }
 
     render(){  
-        //console.log(this.props.departments);        
+        //console.log(this.props.departments);   
+        
+        const {search,products} = this.props;
+        let  finalProductList = [];
 
         const noOfProductsPerPage = 20;  // 20 product cards per page
-        const pageCount = Math.ceil(this.props.count / noOfProductsPerPage);
+        let pageCount;
+
+        if(search){
+            pageCount = Math.ceil(this.props.count / noOfProductsPerPage);            
+        }
+        
+        else if(search[search.length-1].searchTerm> 0) {
+               const searchTerm =
+               search[search.length - 1].searchTerm;
+              
+               finalProductList = products.filter(
+                 this.searchingFor(searchTerm)
+               );
+               
+               pageCount = Math.ceil(
+                 finalProductList.length / noOfProductsPerPage
+               );
+               console.log("pagc", pageCount);
+        } 
         
         let pages = [];
         for(let i=1 ; i<= pageCount; i++) {
             pages.push(i);
         }
 
-        return (
-            
-            pages.map((page, index) =>                 
-                
-                    <li key={index} className='item' onClick = {(event) => this.onPageClick(event,page)}>
-                                {page}
-                    </li>   
-                             
+        if(pages.length === 0){
+            return (
+                <li className='item' onClick = {(event) => this.onPageClick(event,1)}>  1     </li>  
             )
-        )
+
+        } else {
+            return (                
+                pages.map((page, index) =>                 
+                    
+                        <li key={index} className='item' onClick = {(event) => this.onPageClick(event,page)}>
+                                    {page}
+                        </li>                       
+                )
+            )
+        }
     }
 }
 
 const mapStateToProps = (state) => {
     //console.log(state);
-    return { count: state.products.data.count, departmentId: state.products.departmentId, categoryId: state.products.categoryId };
+    return { count: state.products.data.count, 
+             departmentId: state.products.departmentId,
+             categoryId: state.products.categoryId,
+             products: state.products.data.rows,
+             search:state.search
+     };
 }
 
 export default connect(mapStateToProps, {selectProduct, selectProductFromCategory, selectProductFromDepartment })(Pagination);

@@ -25,7 +25,7 @@ class Categories extends React.Component {
             sibling.className = 'item';
             sibling = sibling.nextSibling;
         }
-        console.log(siblings);
+        //console.log(siblings);
         //console.log(i);
         this.props.selectProductFromCategory(category_id,1);
         event.currentTarget.className = 'item active';

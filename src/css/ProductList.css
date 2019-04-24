@@ -29,5 +29,9 @@
 .productImage{
     height: 100% !important;
     width: 69% !important;
-    margin-left: 16%;
+    margin-left: 16%;    
 }
+
+.productCard:hover {
+    box-shadow: 0 0 100px rgba(33,33,33,.2) !important;
+  }

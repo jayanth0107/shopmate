@@ -1,10 +1,10 @@
 import backendApi from '../apis/backendApi';
-import { SELECTED_CATEGORY , SELECTED_DEPARTMENT, SELECTED_PRODUCT} from './types';
+import { SELECTED_CATEGORY , SELECTED_DEPARTMENT, SELECTED_PRODUCT, SEARCH} from './types';
 
 export const selectDepartment = () =>  async dispatch => {
-        const response = await backendApi.get('/departments');
+    const response = await backendApi.get('/departments');
 
-        dispatch( {type: SELECTED_DEPARTMENT, payload: response.data });
+    dispatch( {type: SELECTED_DEPARTMENT, payload: response.data });
 };
 
 export const selectCategory = () => async dispatch => {
@@ -35,4 +35,9 @@ export const selectProductFromCategory = (id, pageNo) => async dispatch => {
     const response = await backendApi.get(`/products/inCategory/${id}?page=${pageNo}`);
 
     dispatch({type: SELECTED_PRODUCT, payload: response.data, departmentId: '', cateogryId: `${id}`});
+};
+
+export const searchProduct = (searchTerm) => {
+    
+    return {type: SEARCH,  searchTerm: searchTerm };
 };

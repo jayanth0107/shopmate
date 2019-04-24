@@ -15,7 +15,12 @@ class ShopMateHeader extends React.Component {
     super(props);
     this.state = { open: false };
     this.open = this.open.bind(this);
+    this.openRegister = this.openRegister.bind(this);
     this.close = this.close.bind(this);
+  }
+
+  openRegister() {
+    this.setState({ openRegister: true });
   }
 
   open() {
@@ -31,15 +36,20 @@ class ShopMateHeader extends React.Component {
     return (
       <div>
         <div className="ui secondary pointing menu">
-          <Button to="/" className="item" onClick={this.open}>
+          <div className={`headerText`}>Hi!  </div>
+          <button to="/" className={`item signIn`} onClick={this.open}>
             Sign In
-          </Button>
+          </button>
+          <div className={`headerText`}>or  </div>
+          <button to="/" className={`item register`} onClick={this.openRegister}>
+            Register
+          </button>          
 
           <div className="right menu">
-            <i className="shopping bag icon big" />
-            <Link to="/" className="item">
-              Your Bag
-            </Link>
+            <i className={`shopping bag icon big headerIcon`} />
+              <Link to="/shoppingCart" className="item">
+                Your Bag
+              </Link>
           </div>
         </div>
 

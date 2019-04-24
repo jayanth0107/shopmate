@@ -1,0 +1,21 @@
+.signIn {
+    color: #f30965 !important;
+    font-weight: 800 !important;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.register {
+    color: #f30965 !important;
+    font-weight: 800 !important;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.headerText{
+    padding-top: 10px;
+}
+
+.headerIcon {
+    padding-top: 7px;
+}

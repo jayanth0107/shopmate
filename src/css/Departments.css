@@ -4,7 +4,7 @@
 
 .logoText {
     font-size: 3.1em;
-    color:red;   
+    color:#f30965;   
 }
 
 .departmentName {
@@ -16,9 +16,9 @@
 
 li:hover {
     text-decoration: underline !important;
-    text-decoration-color: red !important;
+    text-decoration-color: #f30965 !important;
     color:white !important;
-    background-color:red !important;
+    background-color:#f30965 !important;
 }
 
 .departmentBar {
