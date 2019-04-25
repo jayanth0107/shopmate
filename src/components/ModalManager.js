@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button, Header, Icon,  Modal  } from "semantic-ui-react";
+import { Button, Header, Icon,  Modal } from "semantic-ui-react";
 
-import { closeModal } from "../actions";
+import { closeModal, selectAttributes, selectReviews } from "../actions";
 import Image from 'react-image-resizer';
+import _ from 'lodash';
 
 export class ModalManager extends Component {
+
+  state = {};   
+
   render() {
-    const { modalConfiguration } = this.props;
+    const { modalConfiguration, attributes, reviews } = this.props;
 
     const defaultProps = {
       defaultOpen: true,
@@ -19,19 +23,30 @@ export class ModalManager extends Component {
 
     if (modalConfiguration) {
       const { modalProps = {} } = modalConfiguration;
-      const img = 'https://backendapi.turing.com/images/products/' + modalProps.thumbnail
-      console.log(modalProps);
-      console.log("img-"+img);
-      renderedComponent = <Modal {...Object.assign({}, modalProps, defaultProps)} size="medium">
-                                <Modal.Content image>
-                                    {/* <Image wrapped size='big' src={img}  /> */}
-                                    <div style={{ width: '27%', marginLeft:'2%'}}>
-                                        {/* <img src={img} alt={modalProps.name} /> */}
+      const img = 'https://backendapi.turing.com/images/products/' + modalProps.thumbnail;
+     
+      this.props.selectAttributes(modalProps.id);
+      let colors = _.filter(this.props.attributes,['attribute_name', 'Color']); 
+      const sizes = _.filter(attributes,['attribute_name', 'Size']);
+      
+      const Sizes = sizes.map((child,index) =>                                           
+      <button className="ui red circular label" style={{fontWeight: 'bold', fontSize:'1em', marginLeft: '3%', cursor: 'pointer'}} key={index}>{child.attribute_value}  </button>) 
+
+      const Colors = colors.map((child) =>                                           
+      <div style={{width:'25px', height:'25px', borderRadius: '50%', backgroundColor:child.attribute_value, border: 'solid 1px black', marginLeft: '10px', cursor: 'pointer'}}  key={child.attribute_value}> </div>)  
+
+
+      this.props.selectReviews(modalProps.id);
+      console.log(this.props.reviews);
+
+      
+      renderedComponent = <Modal  size='small' {...Object.assign({}, modalProps, defaultProps)}>
+                                <Modal.Content image>                                    
+                                    <div style={{ width: '27%', marginLeft:'2%'}}>                                        
                                         <Image src={img} height="200" width="200"> </Image>  
                                     </div>
                                     
-                                    <div style={{height:'100%' , width: '70%' }}>
-                                    
+                                    <div style={{height:'100%' , width: '70%', color: 'black', marginLeft:'5%' }}>                                    
                                         <Header as='h1'>{modalProps.name}</Header>
 
                                         <div style={{color: 'red', display:'flex', flexDirection:'row'}}>
@@ -43,16 +58,27 @@ export class ModalManager extends Component {
                                         </div>
 
 
-                                        <p style={{color:'black', marginTop: '3%'}}>{modalProps.description}</p>
-                                        <button className="circular ui icon button">
-                                            <i className="icon settings"></i>
-                                        </button>
+                                        <p style={{color:'black', marginTop: '3%', fontSize: '17px'}}>{modalProps.description}</p>
+
+                                        <span style={{fontWeight: 'bold%', fontSize: '18px'}}>Size </span>
+                                            <div className="size-container">
+                                                {Sizes}
+                                            </div>
+
+                                        <br /><span style={{fontWeight: 'bold%', fontSize: '18px'}}>Color </span>
+                                        <div style={{display:'flex', flexDirection:'row'}}>
+                                            {Colors}
+                                        </div>
+
+                                        
+
+                                        
                                     
                                     </div>
                                 </Modal.Content>
                                 <Modal.Actions>
                                 <Button primary>
-                                    Proceed to Cart <Icon name='right chevron' />
+                                    Add to Cart <Icon name='right chevron' />
                                 </Button>
                                 </Modal.Actions>
       
@@ -66,7 +92,8 @@ export class ModalManager extends Component {
 }
 
 function mapStateToProps(state) {
-  return { modalConfiguration: state.modals };
+  //console.log(state);
+  return { modalConfiguration: state.modals, attributes: state.attributes, reviews: state.reviews };
 }
 
-export default connect(mapStateToProps, { closeModal })(ModalManager);
+export default connect(mapStateToProps, { closeModal, selectAttributes, selectReviews })(ModalManager);

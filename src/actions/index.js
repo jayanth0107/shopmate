@@ -1,5 +1,6 @@
 import backendApi from '../apis/backendApi';
-import { SELECTED_CATEGORY , SELECTED_DEPARTMENT, SELECTED_PRODUCT, SEARCH, MODAL_OPEN, MODAL_CLOSE} from './types';
+import _ from 'lodash';
+import { SELECTED_CATEGORY , SELECTED_DEPARTMENT, SELECTED_PRODUCT, SEARCH, MODAL_OPEN, MODAL_CLOSE, SELECTED_ATTRIBUTE, SELECTED_REVIEW} from './types';
 
 export const selectDepartment = () =>  async dispatch => {
     const response = await backendApi.get('/departments');
@@ -8,9 +9,9 @@ export const selectDepartment = () =>  async dispatch => {
 };
 
 export const selectCategory = () => async dispatch => {
-        const response = await backendApi.get('/categories');
+    const response = await backendApi.get('/categories');
         
-        dispatch({type: SELECTED_CATEGORY, payload: response.data.rows });   
+    dispatch({type: SELECTED_CATEGORY, payload: response.data.rows });   
 };
 
 export const selectCategoryFromDepartment = id => async dispatch => {
@@ -42,6 +43,33 @@ export const searchProduct = (searchTerm) => {
     return {type: SEARCH,  searchTerm: searchTerm };
 };
 
+// export const selectAttributes = id => async dispatch => {
+//     const response = await backendApi.get(`/attributes/inProduct/${id}`);
+
+//     dispatch({type: SELECTED_ATTRIBUTE, payload: response.data});
+    
+// };
+
+export const selectAttributes = id => dispatch => _selectAttributes(id, dispatch);
+      const _selectAttributes = _.memoize(async (id, dispatch) => {
+      const response = await backendApi.get(`/attributes/inProduct/${id}`);
+
+      dispatch({type: SELECTED_ATTRIBUTE,  payload: response.data });
+});
+
+// export const selectReviews = id => async dispatch => {
+//     const response = await backendApi.get(`/products/${id}/reviews`);
+
+//     dispatch({type:SELECTED_REVIEW, payload: response.data});
+// };
+
+export const selectReviews = id => dispatch => _selectReviews(id, dispatch);
+    const _selectReviews = _.memoize(async (id, dispatch) => {
+    const response = await backendApi.get(`/products/${id}/reviews`);
+
+    dispatch({type:SELECTED_REVIEW, payload: response.data});
+});
+
 export function openModal(modalProps) {
     return {
       type: MODAL_OPEN,
@@ -54,3 +82,4 @@ export function closeModal() {
       type: MODAL_CLOSE 
     };
 }
+

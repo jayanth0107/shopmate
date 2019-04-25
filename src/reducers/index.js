@@ -5,6 +5,8 @@ import categoryReducer from './categoryReducers';
 import productReducer from './productReducers';
 import searchReducer from './searchReducers';
 import modalReducer from './modalReducer';
+import attributeReducer from './attributeReducers';
+import reviewReducer from './reviewReducers';
 
 export default combineReducers({
     form: formReducer,
@@ -12,5 +14,7 @@ export default combineReducers({
     categories: categoryReducer,
     products: productReducer,
     search: searchReducer,
-    modals: modalReducer
+    modals: modalReducer,
+    attributes: attributeReducer,
+    reviews: reviewReducer
 });
