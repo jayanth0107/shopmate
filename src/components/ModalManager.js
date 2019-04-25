@@ -5,13 +5,18 @@ import { Button, Header, Icon,  Modal } from "semantic-ui-react";
 import { closeModal, selectAttributes, selectReviews } from "../actions";
 import Image from 'react-image-resizer';
 import _ from 'lodash';
+import '../css/ShoppingCart.css';
 
 export class ModalManager extends Component {
 
   state = {};   
 
+  addToCart() {
+    console.log('pressed');
+  }
+
   render() {
-    const { modalConfiguration, attributes, reviews } = this.props;
+    const { modalConfiguration, attributes} = this.props;
 
     const defaultProps = {
       defaultOpen: true,
@@ -33,11 +38,37 @@ export class ModalManager extends Component {
       <button className="ui red circular label" style={{fontWeight: 'bold', fontSize:'1em', marginLeft: '3%', cursor: 'pointer'}} key={index}>{child.attribute_value}  </button>) 
 
       const Colors = colors.map((child) =>                                           
-      <div style={{width:'25px', height:'25px', borderRadius: '50%', backgroundColor:child.attribute_value, border: 'solid 1px black', marginLeft: '10px', cursor: 'pointer'}}  key={child.attribute_value}> </div>)  
+      <button style={{width:'25px', height:'25px', borderRadius: '50%', backgroundColor:child.attribute_value, border: 'solid 1px black', marginLeft: '10px', cursor: 'pointer'}}  key={child.attribute_value}> </button>)  
 
 
       this.props.selectReviews(modalProps.id);
-      console.log(this.props.reviews);
+      //console.log(this.props.reviews);
+
+      const starRatings = _.map(this.props.reviews,'rating');
+      const StarRatings = starRatings.map(() =>
+      <span className="fa fa-star"></span>)
+
+      const Reviews = this.props.reviews.map((review) =>
+      
+        <div className="comment">
+            <button className="avatar">
+              <img alt="avatar" src="https://img.icons8.com/material-rounded/50/000000/user.png"/>
+            </button>
+            <div key={review.name} className="content">
+              <div className="author">{review.name}</div>
+              <div className="metadata">
+                <span className="date">{review.created_on}</span> 
+              </div>
+              <div className="text">
+                {review.review}
+              </div>
+              <div className="ui star rating">
+                {StarRatings}
+              </div>
+            </div>
+        </div>)   
+        
+          
 
       
       renderedComponent = <Modal  size='small' {...Object.assign({}, modalProps, defaultProps)}>
@@ -66,19 +97,36 @@ export class ModalManager extends Component {
                                             </div>
 
                                         <br /><span style={{fontWeight: 'bold%', fontSize: '18px'}}>Color </span>
-                                        <div style={{display:'flex', flexDirection:'row'}}>
+                                        <div className="color-container" style={{display:'flex', flexDirection:'row'}}>
                                             {Colors}
                                         </div>
 
-                                        
+                                        <br />
+                                        <button className={`ui left floated button cartButton`} onClick={this.addToCart}>
+                                          Add to Cart <Icon name='right chevron' />
+                                        </button>
 
-                                        
+                                        <br /><br />
+
+                                        <form className="ui reply form">
+                                            <div className="field">
+                                              <textarea></textarea>
+                                            </div>
+                                            <button className={`ui blue labeled submit icon button cartButton`}>
+                                              <i className="icon edit"></i> Leave Review
+                                            </button>
+                                        </form>
+
+                                        <br /><span style={{fontWeight: 'bold%', fontSize: '18px'}}>Reviews </span>
+                                        <div class="ui comments">
+                                            {Reviews}
+                                        </div>                              
                                     
                                     </div>
                                 </Modal.Content>
                                 <Modal.Actions>
                                 <Button primary>
-                                    Add to Cart <Icon name='right chevron' />
+                                    Close 
                                 </Button>
                                 </Modal.Actions>
       
