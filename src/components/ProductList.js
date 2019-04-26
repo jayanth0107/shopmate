@@ -66,10 +66,6 @@ class ProductList extends React.Component {
                             {product.description}
                         </div> 
                     </div>
-                    
-                    {/* <Modal title={product.name} content={product.description} actions={actions} onDismiss={() => history.push('/')}/>   */}
-                   
-                    
                 </div>             
             )
         })
@@ -92,8 +88,6 @@ class ProductList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    //console.log('state',state);
-
     return  {products: state.products.data.rows, productCount: state.products.data.count, search: state.search};
      
 }

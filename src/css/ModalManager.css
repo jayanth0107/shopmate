@@ -1,0 +1,45 @@
+.ui.modal>.close {
+
+    color: #f30965 !important;
+}
+
+.starColor{
+    color: #f30965;
+    font-size: 1.5em
+}
+
+.colorContainer{
+    display:'flex';
+    flex-direction:'row';
+}
+
+.sizeColor{
+    background-color: #f30965 !important;
+    color: white !important;
+    width: 10%;
+    margin: 10px !important;
+    cursor: pointer;
+}
+
+/* .ui.label{
+    cursor: pointer !important;
+} */
+
+.colorDot{
+    width: 5% !important;
+    height: 25px !important;
+    border: solid 1px black !important;
+    margin: 10px !important;
+    border-radius: 50% !important;
+    cursor: pointer;
+}
+
+.selectedColorDot{
+    width: 6% !important;
+    height: 36px !important;
+    border: solid 1px black !important;
+    margin: 10px !important;
+    border-radius: 50% !important;
+    cursor: pointer;
+    border: dotted 3px white;
+}

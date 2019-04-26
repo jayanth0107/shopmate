@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer} from 'redux-form';
-import departmentReducer from './departmentReducers';
-import categoryReducer from './categoryReducers';
-import productReducer from './productReducers';
-import searchReducer from './searchReducers';
+import departmentReducer from './departmentsReducer';
+import categoryReducer from './categoriesReducer';
+import productReducer from './productsReducer';
+import searchReducer from './searchReducer';
 import modalReducer from './modalReducer';
-import attributeReducer from './attributeReducers';
-import reviewReducer from './reviewReducers';
+import attributeReducer from './attributesReducer';
+import reviewReducer from './reviewsReducer';
+import shoppingCartReducer from './shoppingCartReducer';
 
 export default combineReducers({
     form: formReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
     search: searchReducer,
     modals: modalReducer,
     attributes: attributeReducer,
-    reviews: reviewReducer
+    reviews: reviewReducer,
+    cart: shoppingCartReducer,
 });

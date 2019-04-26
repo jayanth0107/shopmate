@@ -13,7 +13,6 @@ class Departments extends React.Component {
     }
 
     onDepartmentClick = (department_id) => {
-        //console.log(this.props);
         this.props.selectCategoryFromDepartment(department_id);   
         this.props.selectProductFromDepartment(department_id,1);
     }
@@ -29,7 +28,6 @@ class Departments extends React.Component {
     }
 
     render(){  
-        //console.log(this.props.departments);
         return (
             <div className={`ui pointing menu departmentBar`} >
                 <div className={`ui label logo`}>
@@ -47,7 +45,6 @@ class Departments extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    //console.log(state);
     return { departments: state.departments };
 }
 

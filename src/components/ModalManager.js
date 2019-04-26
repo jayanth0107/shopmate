@@ -5,15 +5,56 @@ import { Button, Header, Icon,  Modal } from "semantic-ui-react";
 import { closeModal, selectAttributes, selectReviews } from "../actions";
 import Image from 'react-image-resizer';
 import _ from 'lodash';
-import '../css/ShoppingCart.css';
+
+import '../css/ModalManager.css';
+import Rating from 'react-rating';
 
 export class ModalManager extends Component {
 
-  state = {};   
+  constructor(props) {    
+    super(props)
+    this.state = {
+      colorCondition: false, sizeCondition:false
+    }
+  }
   //_isMounted = false;
 
-  addToCart() {
-    console.log('pressed');
+  addToCart = (event, modalProps, color, size) => {
+    console.log(modalProps, color, size);
+    console.log(event.currentTarget.value);
+
+    let siblings = [];
+    var sibling = event.currentTarget.parentNode.firstChild;
+        while (sibling) {
+            if (sibling.nodeType === 1) {
+                siblings.push(sibling);
+            }
+            
+            sibling.className = 'colorDot';
+            sibling = sibling.nextSibling;
+          }
+        //console.log(siblings);
+
+    event.currentTarget.className = 'selectedColorDot';    
+
+  }
+
+  addColorToCart = (event, modalProps, color) => {
+    
+    let siblings = [];
+    var sibling = event.currentTarget.parentNode.firstChild;
+        while (sibling) {
+            if (sibling.nodeType === 1) {
+                siblings.push(sibling);
+            }
+            
+            sibling.className = 'colorDot';
+            sibling = sibling.nextSibling;
+          }
+        //console.log(siblings);
+
+    event.currentTarget.className = 'selectedColorDot';    
+  
   }
 
   componentDidMount(){
@@ -33,20 +74,23 @@ export class ModalManager extends Component {
         const a = [...Array(num).keys()];        
         return (
         <span>{a.map((num,index) => { return <i key={index} className={`fa fa-star starColor`}></i> } )} </span>)
-      }
-      
+      }      
 
       const img = 'https://backendapi.turing.com/images/products/' + modalProps.thumbnail;
      
       this.props.selectAttributes(modalProps.product_id);
-      let colors = _.filter(this.props.attributes,['attribute_name', 'Color']); 
+      const colors = _.filter(this.props.attributes,['attribute_name', 'Color']); 
       const sizes = _.filter(attributes,['attribute_name', 'Size']);
       
-      const Sizes = sizes.map((child,index) =>                                           
-      <button className="ui red circular label" style={{fontWeight: 'bold', fontSize:'1em', marginLeft: '3%', cursor: 'pointer'}} key={'size'+index}>{child.attribute_value}  </button>) 
+      const Sizes = sizes.map((size,index) =>                                           
+      <button className={`ui circular label sizeColor`} key={'size'+index} value={size.attribute_value} 
+              onClick={(event) => this.addSizeToCart(event, modalProps, size.attribute_value)}>{size.attribute_value}</button>) 
 
-      const Colors = colors.map((child) =>                                           
-      <button style={{width:'25px', height:'25px', borderRadius: '50%', backgroundColor:child.attribute_value, border: 'solid 1px black', marginLeft: '10px', cursor: 'pointer'}}  key={child.attribute_value}> </button>)  
+      const Colors = colors.map((color) =>                                           
+      <button className=  { this.state.colorCondition ? `selectedColorDot` : `colorDot`}    ref='colorPicker'         
+              style={{backgroundColor: color.attribute_value}} 
+              value={color.attribute_value} key={color.attribute_value} 
+              onClick={(event) => this.addColorToCart(event, modalProps, color.attribute_value)}></button>)  
 
       this.props.selectReviews(modalProps.product_id);
       const Reviews = reviews.map((review, index) =>
@@ -88,11 +132,10 @@ export class ModalManager extends Component {
                         ${modalProps.discounted_price} </span>
             </div>
 
-
             <p style={{color:'black', marginTop: '3%', fontSize: '17px'}}>{modalProps.description}</p>
 
-            <span style={{fontWeight: 'bold%', fontSize: '18px'}}>Size </span>
-                <div className="size-container">
+            <span style={{fontWeight: 'bold', fontSize: '18px'}}>Size </span>
+                <div className="sizeContainer">
                     {Sizes}
                 </div>
 
@@ -102,19 +145,24 @@ export class ModalManager extends Component {
             </div>
 
             <br />
-            <button className={`ui left floated button cartButton`} onClick={this.addToCart}>
+            <button className={`ui right floated button cartButton`} onClick={(event) => this.addToCart(event,modalProps,'White', 'L')}>
               Add to Cart <Icon name='right chevron' />
             </button>
 
-            <br /><br />
-
+            <br /><br /><span style={{fontWeight: 'bold', fontSize: '18px'}}>Leave Review </span>
+            <span ><div className ="ui rating" data-max-rating="1"></div></span>
             <form className="ui reply form">
                 <div className="field">
                   <textarea></textarea>
                 </div>
-                <button className={`ui blue labeled submit icon button cartButton`}>
-                  <i className="icon edit"></i> Leave Review
-                </button>
+                <div>
+                  <button className={`ui blue labeled submit icon button cartButton`}>
+                    <i className="icon edit"></i> Leave Review 
+                  </button>
+                  <Rating emptySymbol="fa fa-star-o fa-2x" style={{color:'#f30965'}}
+                          fullSymbol="fa fa-star fa-2x" start={0} step={1} initialRating={3} />
+                </div>
+                
             </form>
 
             <br /><span style={{fontWeight: 'bold%', fontSize: '18px'}}>Reviews </span>
@@ -156,7 +204,7 @@ export class ModalManager extends Component {
 
 function mapStateToProps(state) {
   //console.log(state);
-  return { modalConfiguration: state.modals, attributes: state.attributes, reviews: state.reviews };
+  return { modalConfiguration: state.modals, attributes: state.attributes, reviews: state.reviews, cart: state.cart };
 }
 
 export default connect(mapStateToProps, { closeModal, selectAttributes, selectReviews })(ModalManager);
