@@ -19,3 +19,9 @@
 .headerIcon {
     padding-top: 7px;
 }
+
+.cartNumber {
+    top: 0% !important;
+    left: 93% !important;
+    font-size: 0.75em !important;
+}

@@ -46,11 +46,24 @@ class ShopMateHeader extends React.Component {
           </button>          
 
           <div className="right menu">
-            <i className={`shopping bag icon big headerIcon`} />
+            <i className={`shopping bag icon big headerIcon`}/>
+            <span className={`floating ui red label cartNumber`} style={{marginLeft: '8% !important'}}>0</span>
+              <Link to="/shoppingCart" className="item">
+                Your Bag
+              </Link> 
+          </div>
+
+          {/* <div className="ui compact right menu">
+            <li className="item">
+              <i className={`shopping bag icon big headerIcon`} />
+              <div className="floating ui red label">0</div>
+            </li>
+            <li className="item">
               <Link to="/shoppingCart" className="item">
                 Your Bag
               </Link>
-          </div>
+            </li>
+          </div> */}
         </div>
 
         <Modal open={this.state.open} onClose={this.close}>

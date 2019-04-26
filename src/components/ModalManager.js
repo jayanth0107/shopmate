@@ -117,29 +117,28 @@ export class ModalManager extends Component {
     return (
     <Modal size='small' {...Object.assign({}, modalProps, defaultProps)}>
       <Modal.Content image>                                    
-        <div style={{ width: '27%', marginLeft:'2%'}}>                                        
+        <div className={`imageDivModal`}>                                        
             <Image src={img} height="200" width="200"> </Image>  
         </div>
         
-        <div style={{height:'100%' , width: '70%', color: 'black', marginLeft:'5%' }}>                                    
+        <div className={`headerDivModal`} >                                    
             <Header as='h1'>{modalProps.name}</Header>
 
-            <div style={{color: 'red', display:'flex', flexDirection:'row'}}>
-                <span style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', 
-                                textDecorationColor: 'red', fontWeight: 'bold', fontSize:'1.2em'}}> 
+            <div className={`priceDivModal`} style={{display:'flex', flexDirection:'row'}}>
+                <span className={`priceModal`}> 
                         ${modalProps.price}   </span>
-                <span style={{textDecorationStyle: 'solid', textDecorationColor: 'red', fontWeight: 'bold', marginLeft: '7%', fontSize:'2em'}}> 
+                <span className={`discountedPriceModal`}> 
                         ${modalProps.discounted_price} </span>
             </div>
 
-            <p style={{color:'black', marginTop: '3%', fontSize: '17px'}}>{modalProps.description}</p>
+            <p className={`descriptionModal`}>{modalProps.description}</p>
 
-            <span style={{fontWeight: 'bold', fontSize: '18px'}}>Size </span>
-                <div className="sizeContainer">
+            <span className={`sizeColorTextModal`}>Size </span>
+                <div className={`sizeContainer`}>
                     {Sizes}
                 </div>
 
-            <br /><span style={{fontWeight: 'bold', fontSize: '18px'}}>Color </span>
+            <br /><span className={`sizeColorTextModal`}>Color </span>
             <div className={`colorContainer`}>
                 {Colors}
             </div>

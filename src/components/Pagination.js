@@ -10,22 +10,32 @@ class Pagination extends React.Component {
         this.searchingFor = this.searchingFor.bind(this);
     }
 
-    componentDidUpdate(){
-        if(!document.getElementsByClassName('pageNoStart')[0])
+    componentDidMount(){
+        console.log(document.getElementsByClassName('pageNoStart')[0]);
+        if(document.getElementsByClassName('pageNoStart')[0])
             document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';         
-      }
+    }
+
+    componentDidUpdate(){
+        if(document.getElementsByClassName('pageNoStart')[0])
+            document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';    
+            
+         for(let i=1; i<6; i++)   {
+            if(document.getElementsByClassName('pageNoStart')[0].childNodes[i].className === 'item active')
+            {
+                document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item'; 
+            }
+         }
+    }
 
     searchingFor(term){
         return function(x){
             return x.name.toLowerCase().includes(term.toLowerCase()) || !term;
         }
-    }
+    }    
 
-    
-
-    onPageClick = (event, pageNo) => {
+    onPageClick = (event, pageNo) => {        
         
-        //event.currentTarget.className = 'item active';
         var siblings = [];
         var sibling = event.currentTarget.parentNode.firstChild;
         while (sibling) {
@@ -53,8 +63,6 @@ class Pagination extends React.Component {
     }
 
     render(){  
-        //console.log(this.props.departments);   
-        
         const {search,products} = this.props;
         let  finalProductList = [];
 
@@ -76,7 +84,6 @@ class Pagination extends React.Component {
                pageCount = Math.ceil(
                  finalProductList.length / noOfProductsPerPage
                );
-               console.log("pagc", pageCount);
         } 
         
         let pages = [];

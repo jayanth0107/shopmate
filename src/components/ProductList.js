@@ -60,7 +60,7 @@ class ProductList extends React.Component {
                         <div className={`center aligned header productName`}>{product.name}</div>                 
                         <div className={`ui tag labels priceDiv`}>
                             <button className={`ui left large floated label priceTag`} style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: 'black'}}>${product.price}</button>
-                            <button className={`ui red right large floated label discountPriceTag`}>${product.discounted_price}</button>
+                            <button className={`ui right large floated label discountPriceTag`}>${product.discounted_price}</button>
                         </div>
                         <div className="description">
                             {product.description}

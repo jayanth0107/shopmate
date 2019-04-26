@@ -15,10 +15,12 @@
 
 .priceTag {
     margin-left: 6% !important;
+    color: white !important;
 }
 
 .discountPriceTag {
-    margin-left: 17% !important;
+    margin-left: 20% !important;
+    color: white !important;
 }
 
 .productName{
@@ -34,12 +36,16 @@
 
 .productCard:hover {
     box-shadow: 0 0 100px rgba(33,33,33,.2) !important;
-  }
+}
 
-  .ui.dimmer{
-    background-color: transparent !important;
-  }
+.ui.dimmer{
+   background-color: transparent !important;
+}
 
-  .ui.active.dimmer{
-    background-color: transparent !important;
-  }
+.ui.active.dimmer{
+   background-color: transparent !important;
+}
+
+.ui.label{
+    background-color: #f30965;    
+}

@@ -43,3 +43,48 @@
     cursor: pointer;
     border: dotted 3px white;
 }
+
+.priceModal {
+    text-decoration-line: line-through !important;
+    text-decoration-style: solid !important;
+    text-decoration-color: #f30965 !important;
+    font-weight: bold !important;
+    font-size:1.2em !important;
+}
+
+.discountedPriceModal {
+    text-decoration-style: solid !important;
+    text-decoration-color: #f30965 !important;
+    font-weight: bold !important;
+    margin-left: 7% !important;
+    font-size: 2em !important;
+}
+
+.priceDivModal {
+    color: #f30965 !important;
+    display: flex;
+    flex-direction: row;
+}
+
+.imageDivModal {
+    width: 27% !important;
+    margin-left: 2% !important;
+}
+
+.descriptionModal {
+    color:black;
+    margin-top: 3%;
+    font-size: 17px;
+}
+
+.headerDivModal {
+    height: 100%;
+    width: 70%;
+    color: black;
+    margin-left: 5%;
+}
+
+.sizeColorTextModal{
+    font-weight: bold;
+    font-size: 18px;
+}
