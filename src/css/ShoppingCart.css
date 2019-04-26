@@ -33,3 +33,13 @@
     color: white !important;
     background-color: #f30965 !important;
 }
+
+.starColor{
+    color: #f30965;
+    font-size: 1.5em
+}
+
+.colorContainer{
+    display:'flex';
+    flex-direction:'row';
+}

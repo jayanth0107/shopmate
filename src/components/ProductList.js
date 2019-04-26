@@ -23,6 +23,18 @@ class ProductList extends React.Component {
         }
     }
 
+    openModal = (product) => {
+        this.props.openModal({
+            name: product.name, 
+            description: product.description,
+            price: product.price,
+            discounted_price: product.discounted_price,
+            thumbnail: product.thumbnail, 
+            id: product.product_id
+        })
+    }
+
+
     renderList(){ 
 
       const {search,products} = this.props;
@@ -40,15 +52,7 @@ class ProductList extends React.Component {
         return finalProductList.map(product => { 
             return(  
                 <div key={product.product_id} className={`ui card productCard`} 
-                            onClick = {() => this.props.openModal({
-                                name: product.name, 
-                                description: product.description,
-                                price: product.price,
-                                discounted_price: product.discounted_price,
-                                thumbnail: product.thumbnail, 
-                                id:product.product_id
-                            })}>    
-                    <ModalManager />                              
+                            onClick = {() => this.props.openModal(product)}>                                               
                     <div className="image">
                         <img className={`productImage`} alt={product.name} src={'https://backendapi.turing.com/images/products/' + product.thumbnail}/>
                     </div>  
@@ -73,10 +77,16 @@ class ProductList extends React.Component {
     }
 
     render(){
+        const generateKey = (pre) => {
+            return `${ pre }_${ new Date().getTime() }`;
+          }
+
         return (
-            <div className={`ui cards cardList`}>                    
-                    {this.renderList()}                                    
-            </div>                
+            <div key={generateKey()} className={`ui cards cardList`}>                    
+                    {this.renderList()} 
+                    <ModalManager />                                   
+            </div>
+                              
         )
     }
 }
