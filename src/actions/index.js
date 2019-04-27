@@ -70,11 +70,11 @@ export function closeModal() {
     };
 };
 
-export const addCart = (cart) => {
+export const addToCart = (cart) => {
     return {type: ADD, payload: cart};
 };
 
-export const removeCart = (cart) => {
+export const removeFromCart = (cart) => {
     return {type: REMOVE, payload: cart};
 };
 

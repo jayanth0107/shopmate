@@ -1,16 +1,53 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
+import { addToCart } from '../../actions';
 
 import '../../css/ShoppingCart.css'
 
 class ShoppingCart extends React.Component {
 
+    tableData = (cartItems) => {
+        console.log(cartItems);
+        return (    cartItems.map((cartItem,index) =>
+                        <tr key={cartItem.product_id}>
+                            <td><button className={`ui labeled icon button cartRemoveButton`}>
+                                <i className="close icon"></i>
+                                    Remove
+                                </button></td>    
+                            <td key={index}>{cartItem.name}</td>
+                            <td>Color: {cartItem.color}, Size: {cartItem.size}</td>
+                            <td>{cartItem.discounted_price}</td>
+                            <td><button className={`ui icon button incCart`} onClick={this.increment}><i className="minus icon"></i></button>
+                                <span className={`qtySpan`}>{cartItem.quantity}</span>
+                                <button className={`ui icon button decCart`} onClick={this.decrement}><i className="plus icon"></i></button>
+                            </td>
+                            <td>{cartItem.discounted_price}</td>
+                        </tr>
+                        )               
+                )
+    }
+
+    increment = () => {
+        //document.getElementsByClassName('qtySpan').
+    }
+
+    decrement = () => {
+
+    }
+
+    emptyCart = () => {
+        //cartItems = {};
+    }
 
     render() {
+        const {cartItems} = this.props;
+
+        //const thisItemInCart = cartItems.filter(item => item.product_id === )
         return (
             <div className={`mainCartDiv`}>
                 <div className={`cartTopDiv`}>
-                    <button className={`ui left floated button cartButton`}>EMPTY CART</button>
+                    <button className={`ui left floated button cartButton`} onClick={this.emptyCart}>EMPTY CART</button>
                     <label className={`totalLabel`}>Total: </label>
                                           
                         <Link to="/shippingAddress" className="item">
@@ -30,21 +67,8 @@ class ShoppingCart extends React.Component {
                         </tr>
                     </thead>   
 
-                    <tbody>
-                        <tr>
-                            <td><button className={`ui labeled icon button cartRemoveButton`}>
-                                <i className="close icon"></i>
-                                    Remove
-                                </button></td>    
-                            <td>John Lilki</td>
-                            <td>September 14, 2013</td>
-                            <td>100</td>
-                            <td><button className={`ui icon button incCart`}><i className="minus icon"></i></button>
-                                <span className={`qtySpan`}>1</span>
-                                <button className={`ui icon button decCart`}><i className="plus icon"></i></button>
-                            </td>
-                            <td>200</td>
-                        </tr>
+                    <tbody>                        
+                            {this.tableData(cartItems)}                        
                     </tbody>
                 </table>
 
@@ -54,4 +78,10 @@ class ShoppingCart extends React.Component {
     }
 }
 
-export default ShoppingCart;
+const mapStateToProps = (state) => {
+    console.log(state);
+    return  {cartItems: state.cart};
+     
+}
+
+export default connect(mapStateToProps, { addToCart })(ShoppingCart);

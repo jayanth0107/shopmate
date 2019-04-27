@@ -13,12 +13,14 @@
     flex-direction:'row';
 }
 
-.sizeColor{
+.sizeButton{
     background-color: #f30965 !important;
     color: white !important;
     width: 10%;
     margin: 10px !important;
     cursor: pointer;
+    border-radius: 50%;
+    height: 25px !important;
 }
 
 /* .ui.label{
@@ -42,6 +44,17 @@
     border-radius: 50% !important;
     cursor: pointer;
     border: dotted 3px white;
+}
+
+.selectedSizeButton{
+    width: 12% !important;
+    background-color: #f30965 !important;
+    color: white !important;
+    height: 36px !important;  
+    margin: 10px !important;  
+    cursor: pointer;
+    border: dotted 3px white;
+    border-radius: 50%;
 }
 
 .priceModal {
@@ -87,4 +100,8 @@
 .sizeColorTextModal{
     font-weight: bold;
     font-size: 18px;
+}
+
+.ui.modal{
+    border: solid 3px #f30965;
 }

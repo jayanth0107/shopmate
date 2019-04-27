@@ -10,22 +10,25 @@ class Pagination extends React.Component {
         this.searchingFor = this.searchingFor.bind(this);
     }
 
-    componentDidMount(){
-        console.log(document.getElementsByClassName('pageNoStart')[0]);
-        if(document.getElementsByClassName('pageNoStart')[0])
-            document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';         
+    componentDidMount(){        
+        if(document.getElementsByClassName('pageNoStart').length > 0){
+            if(document.getElementsByClassName('pageNoStart')[0])
+                document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';  
+        }       
     }
 
     componentDidUpdate(){
-        if(document.getElementsByClassName('pageNoStart')[0])
-            document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';    
-            
-         for(let i=1; i<6; i++)   {
-            if(document.getElementsByClassName('pageNoStart')[0].childNodes[i].className === 'item active')
-            {
-                document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item'; 
+        if(document.getElementsByClassName('pageNoStart').length > 0){
+            if(document.getElementsByClassName('pageNoStart')[0])
+                document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';    
+                
+            for(let i=1; i<6; i++)   {
+                if(document.getElementsByClassName('pageNoStart')[0].childNodes[i].className === 'item active')
+                {
+                    document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item'; 
+                }
             }
-         }
+        }
     }
 
     searchingFor(term){

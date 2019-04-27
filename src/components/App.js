@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import '../css/App.css';
 
-import Headers from './Header';
+import Headers from './ShopMateHeader';
 import Footer from './Footer';
 import ContentPage from './RouterPage';
 import Departments from './Departments';

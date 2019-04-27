@@ -78,6 +78,7 @@ class ProductList extends React.Component {
           }
 
         return (
+            
             <div key={generateKey()} className={`ui cards cardList`}>                    
                     {this.renderList()} 
                     <ModalManager />                                   

@@ -1,14 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Message,
-  Segment,
-  Modal
-} from "semantic-ui-react";
+import { connect } from 'react-redux';
+import { addToCart } from '../actions';
+import { Button,  Form,  Grid,  Header,  Message,  Segment,  Modal} from "semantic-ui-react";
 
 class ShopMateHeader extends React.Component {
   constructor(props) {
@@ -46,11 +40,11 @@ class ShopMateHeader extends React.Component {
           </button>          
 
           <div className="right menu">
-            <i className={`shopping bag icon big headerIcon`}/>
-            <span className={`floating ui red label cartNumber`} style={{marginLeft: '8% !important'}}>0</span>
-              <Link to="/shoppingCart" className="item">
+            <Link to="/shoppingCart" className="item">
+              <i className={`shopping bag icon big headerIcon`}/>
+              <span className={`floating ui red label cartNumber`} style={{marginLeft: '8% !important'}}>{this.props.cartItems.length}</span>              
                 Your Bag
-              </Link> 
+            </Link> 
           </div>
 
           {/* <div className="ui compact right menu">
@@ -112,4 +106,11 @@ class ShopMateHeader extends React.Component {
   }
 }
 
-export default ShopMateHeader;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return  {cartItems: state.cart};
+   
+}
+
+
+export default connect(mapStateToProps, { addToCart })(ShopMateHeader);
