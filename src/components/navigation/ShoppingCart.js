@@ -60,7 +60,6 @@ class ShoppingCart extends React.Component {
             return s.discounted_price*s.quantity
         });
 
-        //const thisItemInCart = cartItems.filter(item => item.product_id === )
         return (
             <div className={`mainCartDiv`}>
                 <div className={`cartTopDiv`}>
