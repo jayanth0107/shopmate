@@ -8,6 +8,7 @@ import modalReducer from './modalReducer';
 import attributeReducer from './attributesReducer';
 import reviewReducer from './reviewsReducer';
 import shoppingCartReducer from './shoppingCartReducer';
+import cartTotalReducer from './cartTotalReducer';
 
 export default combineReducers({
     form: formReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
     attributes: attributeReducer,
     reviews: reviewReducer,
     cart: shoppingCartReducer,
+    cartTotal: cartTotalReducer
 });

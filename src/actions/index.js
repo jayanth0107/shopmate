@@ -1,6 +1,7 @@
 import backendApi from '../apis/backendApi';
 import _ from 'lodash';
-import { SELECTED_CATEGORY , SELECTED_DEPARTMENT, SELECTED_PRODUCT, SEARCH, MODAL_OPEN, MODAL_CLOSE, SELECTED_ATTRIBUTE, SELECTED_REVIEW, ADD, REMOVE} from './types';
+import { SELECTED_CATEGORY , SELECTED_DEPARTMENT, SELECTED_PRODUCT, SEARCH, MODAL_OPEN, MODAL_CLOSE, 
+            SELECTED_ATTRIBUTE, SELECTED_REVIEW, ADD, REMOVE, REMOVEALL, INCREMENTQTY, DECREMENTQTY, CART_TOTAL_COUNT} from './types';
 
 export const selectDepartment = () =>  async dispatch => {
     const response = await backendApi.get('/departments');
@@ -57,7 +58,7 @@ export const selectReviews = id => dispatch => _selectReviews(id, dispatch);
     dispatch({type: SELECTED_REVIEW, payload: response.data});
 });
 
-export function openModal(modalProps) {
+export const openModal = (modalProps) => {
     return {
       type: MODAL_OPEN,
       payload: modalProps
@@ -70,6 +71,10 @@ export function closeModal() {
     };
 };
 
+export const cartTotal = (IncDecOperator) => {
+    return {type: CART_TOTAL_COUNT, payload: IncDecOperator}
+}
+
 export const addToCart = (cart) => {
     return {type: ADD, payload: cart};
 };
@@ -78,3 +83,14 @@ export const removeFromCart = (cart) => {
     return {type: REMOVE, payload: cart};
 };
 
+export const removeAllItemsFromCart = (cart) => {
+    return {type: REMOVEALL, payload: cart};
+};
+
+export const incrementQuantity = (cart) => {
+    return {type: INCREMENTQTY, payload: cart};
+};
+
+export const decrementQuantity = (cart) => {
+    return {type: DECREMENTQTY, payload: cart};
+};

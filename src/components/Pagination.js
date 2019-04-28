@@ -10,49 +10,13 @@ class Pagination extends React.Component {
         this.searchingFor = this.searchingFor.bind(this);
     }
     
-    componentDidMount(){        
-        // if(document.getElementsByClassName('pageNoStart').length > 0){
-        //     if(document.getElementsByClassName('pageNoStart')[0])
-        //         document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';  
-        // }   
-        
-        //document.getElementById('firstPageNo').childNodes[0].className = 'item active';
-    }
-
-    
-    componentDidUpdate(){
-        console.log(document.getElementsByClassName('pageNoStart'));
-        // if(document.getElementsByClassName('pageNoStart').length > 0){
-        //     if(document.getElementsByClassName('pageNoStart')[0])
-        //         document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';   
-                
-        //document.getElementById('firstPageNo').childNodes[0].className = 'item active';
-            
-            console.log(document.getElementsByClassName('pageNoStart').length);
-            console.log(document.getElementsByClassName('pageNoStart'));
-
-            // if(document) {
-            //     for(let i=1; i<6; i++)   {
-            //         if(document.getElementsByClassName('pageNoStart')[0].childNodes[i].className === 'item active')
-            //         {
-            //             document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item'; 
-            //         }
-            //     }
-            // }
-        //}
-    }
-
-    // getSnapshotBeforeUpdate(){
-    //     document.getElementById('firstPageNo').childNodes[0].className = 'item active';
-    // }
     searchingFor(term){
         return function(x){
             return x.name.toLowerCase().includes(term.toLowerCase()) || !term;
         }
     }    
 
-    onPageClick = (event, pageNo) => {        
-        
+    onPageClick = (event, pageNo) => {    
         var siblings = [];
         var sibling = event.currentTarget.parentNode.firstChild;
         while (sibling) {
@@ -79,8 +43,7 @@ class Pagination extends React.Component {
 
     }
 
-    render(){  
-
+    render(){ 
         const {search,products} = this.props;
         let  finalProductList = [];
 
@@ -89,8 +52,7 @@ class Pagination extends React.Component {
 
         if(search){
             pageCount = Math.ceil(this.props.count / noOfProductsPerPage);            
-        }
-        
+        }       
         else if(search[search.length-1].searchTerm> 0) {
                const searchTerm =
                search[search.length - 1].searchTerm;
@@ -108,22 +70,6 @@ class Pagination extends React.Component {
         for(let i=2 ; i<= pageCount; i++) {
             pages.push(i);
         }
-
-        // if(pages.length === 0){
-        //     return (
-        //         <li className='item active' onClick = {(event) => this.onPageClick(event,1)}>  1     </li>  
-        //     )
-
-        // } else {
-        //     return (                
-        //         pages.map((page, index) =>                 
-                    
-        //                 <li key={index} className='item' onClick = {(event) => this.onPageClick(event,page)}>
-        //                             {page}
-        //                 </li>                       
-        //         )
-        //     )
-        // }
 
         const PagesRemain = pages.map((page, index) =>                 
                     
@@ -148,7 +94,6 @@ class Pagination extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return { count: state.products.data.count, 
              departmentId: state.products.departmentId,
              categoryId: state.products.categoryId,

@@ -81,7 +81,7 @@ class ProductList extends React.Component {
             
             <div key={generateKey()} className={`ui cards cardList`}>                    
                     {this.renderList()} 
-                    <ModalManager />                                   
+                <ModalManager />                                   
             </div>
                               
         )

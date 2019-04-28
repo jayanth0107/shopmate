@@ -45,6 +45,7 @@
 
 .ui.active.dimmer{
    background-color: transparent !important;
+   background: rgb(243, 9, 101, 0.2) !important;
 }
 
 .ui.label{

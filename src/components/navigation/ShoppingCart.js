@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
-import { addToCart } from '../../actions';
+import { addToCart, removeFromCart, removeAllItemsFromCart, incrementQuantity, decrementQuantity, cartTotal } from '../../actions';
 
-import '../../css/ShoppingCart.css'
+import '../../css/ShoppingCart.css';
+import _ from 'lodash';
 
 class ShoppingCart extends React.Component {
 
@@ -11,44 +12,60 @@ class ShoppingCart extends React.Component {
         console.log(cartItems);
         return (    cartItems.map((cartItem,index) =>
                         <tr key={cartItem.product_id}>
-                            <td><button className={`ui labeled icon button cartRemoveButton`}>
-                                <i className="close icon"></i>
-                                    Remove
+                            <td><button key={'rem'+index} className={`ui labeled icon button cartRemoveButton`}  onClick={(event) => this.removeItem(cartItem)}>
+                                    <i key={'close'+index} className="close icon"></i>
+                                        Remove
                                 </button></td>    
-                            <td key={index}>{cartItem.name}</td>
+                            <td key={'n'+index}>{cartItem.name}</td>
                             <td>Color: {cartItem.color}, Size: {cartItem.size}</td>
-                            <td>{cartItem.discounted_price}</td>
-                            <td><button className={`ui icon button incCart`} onClick={this.increment}><i className="minus icon"></i></button>
+                            <td key={'p'+index}>{cartItem.discounted_price}</td>
+                            <td><button className={`ui icon button decCart`} key={'dec'+index} onClick={(event) => this.decrement(cartItem)}><i key={'min'+index} className="minus icon"></i></button>
                                 <span className={`qtySpan`}>{cartItem.quantity}</span>
-                                <button className={`ui icon button decCart`} onClick={this.decrement}><i className="plus icon"></i></button>
+                                <button className={`ui icon button incCart`} key={'inc'+index} onClick={(event) => this.increment(cartItem)}><i key={'plus'+index} className="plus icon"></i></button>
                             </td>
-                            <td>{cartItem.discounted_price}</td>
+                            <td key={'st'+index}>{cartItem.subtotal_price? cartItem.subtotal_price : cartItem.quantity*cartItem.discounted_price}</td>
                         </tr>
                         )               
                 )
     }
 
-    increment = () => {
-        //document.getElementsByClassName('qtySpan').
-    }
+    increment = (cartItem) => {
 
-    decrement = () => {
-
+        this.props.cartTotal(1);
+        this.props.incrementQuantity(cartItem);  
     }
-
-    emptyCart = () => {
-        //cartItems = {};
-    }
+  
+      decrement = (cartItem) => {
+          
+        if(cartItem.quantity > 0) {
+            console.log('going to decrement',cartItem)            
+            this.props.cartTotal(-1);
+            this.props.decrementQuantity(cartItem);
+        }
+      }
+  
+      removeItem = (cartItem) => {
+        this.props.cartTotal(-1);
+        this.props.removeFromCart(cartItem);
+      }
+  
+      emptyCart = () => {
+        this.props.cartTotal(0); 
+        this.props.removeAllItemsFromCart();
+      }
 
     render() {
         const {cartItems} = this.props;
+        const totalPrice = _.sumBy(cartItems, function(s) {
+            return s.discounted_price*s.quantity
+        });
 
         //const thisItemInCart = cartItems.filter(item => item.product_id === )
         return (
             <div className={`mainCartDiv`}>
                 <div className={`cartTopDiv`}>
                     <button className={`ui left floated button cartButton`} onClick={this.emptyCart}>EMPTY CART</button>
-                    <label className={`totalLabel`}>Total: </label>
+                    <label className={`totalLabel`}>Total: {Number(totalPrice).toFixed(2)}</label>
                                           
                         <Link to="/shippingAddress" className="item">
                             <button className={`ui right floated button orderButton`}> PLACE ORDER </button> 
@@ -79,9 +96,9 @@ class ShoppingCart extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
+    //console.log(state);
     return  {cartItems: state.cart};
      
 }
 
-export default connect(mapStateToProps, { addToCart })(ShoppingCart);
+export default connect(mapStateToProps, { addToCart, removeFromCart, removeAllItemsFromCart, incrementQuantity, decrementQuantity, cartTotal })(ShoppingCart);

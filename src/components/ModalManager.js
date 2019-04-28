@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Header, Icon,  Modal } from "semantic-ui-react";
 
-import { closeModal, selectAttributes, selectReviews, addToCart } from "../actions";
+import { closeModal, selectAttributes, selectReviews, addToCart, cartTotal } from "../actions";
 import Image from 'react-image-resizer';
 import _ from 'lodash';
 
@@ -17,7 +17,7 @@ export class ModalManager extends Component {
   }
   //_isMounted = false;
 
-  addItemToCart = (event, modalProps) => {
+  addItemToCart = (modalProps) => {
     let userColorSelected = '';
     let userSizeSelected = '';
 
@@ -32,11 +32,12 @@ export class ModalManager extends Component {
 
       let resultObject = {...modalProps, color: userColorSelected, size: userSizeSelected, quantity:1};
       this.props.addToCart(resultObject);
+      this.props.cartTotal(1);
     }
 
   }
 
-  addColorToCart = (event, modalProps) => {
+  addColorToCart = (event) => {
     
     let siblings = [];
     var sibling = event.currentTarget.parentNode.firstChild;
@@ -52,7 +53,7 @@ export class ModalManager extends Component {
     event.currentTarget.className = 'selectedColorDot';  
   }
 
-  addSizeToCart = (event, modalProps) => {
+  addSizeToCart = (event) => {
     
     let siblings = [];
     var sibling = event.currentTarget.parentNode.firstChild;
@@ -148,7 +149,7 @@ export class ModalManager extends Component {
             <div className={`colorContainer`}>{Colors} </div>
 
             <br />
-                <button className={`ui right floated button cartButton`} onClick={(event) => this.addItemToCart(event,modalProps)}>
+                <button className={`ui right floated button cartButton`} onClick={() => this.addItemToCart(modalProps)}>
                     Add to Cart <Icon name='right chevron' />
                 </button>           
 
@@ -195,7 +196,7 @@ export class ModalManager extends Component {
     let renderedComponent;
     if (modalConfiguration) {
       const { modalProps = {} } = modalConfiguration;        
-      renderedComponent = this.configureModal(modalProps,defaultProps);
+      renderedComponent = this.configureModal(modalProps, defaultProps);
     }
 
     return <span>{renderedComponent}</span>;
@@ -207,4 +208,4 @@ function mapStateToProps(state) {
   return { modalConfiguration: state.modals, attributes: state.attributes, reviews: state.reviews };
 }
 
-export default connect(mapStateToProps, { closeModal, selectAttributes, selectReviews, addToCart })(ModalManager);
+export default connect(mapStateToProps, { closeModal, selectAttributes, selectReviews, addToCart, cartTotal })(ModalManager);

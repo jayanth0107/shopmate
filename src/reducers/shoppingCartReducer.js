@@ -3,10 +3,11 @@ import _ from 'lodash';
 export default (state = [], action) => { 
     
     switch(action.type) { 
-        case 'ADD':
+            case 'ADD':
                 console.log('current state below');
                 console.log(state);
-                let  partition1, partition2;
+
+                let partition1, partition2;
                 if(state.length > 0) {  
 
                         let r = _.find(state, pi => pi.name === action.payload.name && pi.color === action.payload.color && pi.size === action.payload.size)
@@ -24,11 +25,61 @@ export default (state = [], action) => {
                         }
                         
                 }
+
                 return [...state, action.payload];  
-        case 'REMOVE':
-                const firstMatchIndex = state.indexOf(action.payload);
-                return state.filter((item,index) => index !== firstMatchIndex)
-        default:
+
+            case 'REMOVE':
+                  console.log(state);
+                  let pIndex = state.findIndex(product => _.isEqual(product,action.payload));
+                  console.log(action.payload);
+                  console.log('findex remove',pIndex)
+                  const pList = state.filter(item => !_.isEqual(item,action.payload))                 
+                   
+                    console.log('returned list',pList)
+                return pList;
+
+            case 'REMOVEALL':
+                
+                return [];
+  
+            case 'INCREMENTQTY':
+                let productIndex = state.findIndex(product => _.isEqual(product,action.payload));
+                
+                const productList = state.map((product,index) => {
+                    if(index === productIndex) {
+                      product.quantity +=1;
+                      product.subtotal_price = product.quantity*product.discounted_price;
+                      product.subtotal_price = Number(product.subtotal_price).toFixed(2);
+                    }
+                    return product;
+                });
+  
+                return productList;
+  
+            case 'DECREMENTQTY':
+                let prodIndex = state.findIndex(product => _.isEqual(product,action.payload));
+                
+                const prodList = state.map((product,index) => {
+                    if(index === prodIndex) {
+                      product.quantity -=1;
+                      if(product.subtotal_price && product.quantity > 1){
+                         product.subtotal_price = product.subtotal_price - product.discounted_price;  
+                         product.subtotal_price = Number(product.subtotal_price).toFixed(2);                       
+                      } else if(product.quantity === 1 && product.subtotal_price) {
+                          product.discounted_price = product.subtotal_price - product.discounted_price;
+                          product.subtotal_price = product.discounted_price;
+                      } else if(product.quantity === 0) {
+                          product.subtotal_price = 0.00;
+                      }
+                      else {
+                         product.discounted_price = Number(product.quantity*product.discounted_price).toFixed(2);                         
+                      }
+                    }
+                    return product;
+                });
+                return prodList;
+
+            default:
                 return state;
     }
         
