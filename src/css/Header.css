@@ -13,7 +13,8 @@
 }
 
 .headerText{
-    padding-top: 10px;
+    padding-top: 21px;
+    font-weight: bold;
 }
 
 .headerIcon {
@@ -21,7 +22,14 @@
 }
 
 .cartNumber {
-    top: 0% !important;
-    left: 93% !important;
+    top: 32% !important;
+    left: 40% !important;
     font-size: 0.75em !important;
+}
+
+.bagText {
+    top: 4%;
+    height: 0px;
+    margin-left: 11px;
+    font-weight: bold;
 }

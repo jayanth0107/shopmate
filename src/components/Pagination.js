@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../css/Pagination.css';
-import { selectProduct, selectProductFromCategory, selectProductFromDepartment } from '../actions';
+import { selectProduct, selectProductFromCategory, selectProductFromDepartment, selectCategory } from '../actions';
 
 class Pagination extends React.Component {
 
@@ -9,28 +9,42 @@ class Pagination extends React.Component {
         super(props);
         this.searchingFor = this.searchingFor.bind(this);
     }
-
+    
     componentDidMount(){        
-        if(document.getElementsByClassName('pageNoStart').length > 0){
-            if(document.getElementsByClassName('pageNoStart')[0])
-                document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';  
-        }       
+        // if(document.getElementsByClassName('pageNoStart').length > 0){
+        //     if(document.getElementsByClassName('pageNoStart')[0])
+        //         document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';  
+        // }   
+        
+        //document.getElementById('firstPageNo').childNodes[0].className = 'item active';
     }
 
+    
     componentDidUpdate(){
-        if(document.getElementsByClassName('pageNoStart').length > 0){
-            if(document.getElementsByClassName('pageNoStart')[0])
-                document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';    
+        console.log(document.getElementsByClassName('pageNoStart'));
+        // if(document.getElementsByClassName('pageNoStart').length > 0){
+        //     if(document.getElementsByClassName('pageNoStart')[0])
+        //         document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item active';   
                 
-            for(let i=1; i<6; i++)   {
-                if(document.getElementsByClassName('pageNoStart')[0].childNodes[i].className === 'item active')
-                {
-                    document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item'; 
-                }
-            }
-        }
+        //document.getElementById('firstPageNo').childNodes[0].className = 'item active';
+            
+            console.log(document.getElementsByClassName('pageNoStart').length);
+            console.log(document.getElementsByClassName('pageNoStart'));
+
+            // if(document) {
+            //     for(let i=1; i<6; i++)   {
+            //         if(document.getElementsByClassName('pageNoStart')[0].childNodes[i].className === 'item active')
+            //         {
+            //             document.getElementsByClassName('pageNoStart')[0].childNodes[0].className = 'item'; 
+            //         }
+            //     }
+            // }
+        //}
     }
 
+    // getSnapshotBeforeUpdate(){
+    //     document.getElementById('firstPageNo').childNodes[0].className = 'item active';
+    // }
     searchingFor(term){
         return function(x){
             return x.name.toLowerCase().includes(term.toLowerCase()) || !term;
@@ -66,6 +80,7 @@ class Pagination extends React.Component {
     }
 
     render(){  
+
         const {search,products} = this.props;
         let  finalProductList = [];
 
@@ -90,30 +105,50 @@ class Pagination extends React.Component {
         } 
         
         let pages = [];
-        for(let i=1 ; i<= pageCount; i++) {
+        for(let i=2 ; i<= pageCount; i++) {
             pages.push(i);
         }
 
-        if(pages.length === 0){
-            return (
-                <li className='item' onClick = {(event) => this.onPageClick(event,1)}>  1     </li>  
-            )
+        // if(pages.length === 0){
+        //     return (
+        //         <li className='item active' onClick = {(event) => this.onPageClick(event,1)}>  1     </li>  
+        //     )
 
-        } else {
-            return (                
-                pages.map((page, index) =>                 
+        // } else {
+        //     return (                
+        //         pages.map((page, index) =>                 
+                    
+        //                 <li key={index} className='item' onClick = {(event) => this.onPageClick(event,page)}>
+        //                             {page}
+        //                 </li>                       
+        //         )
+        //     )
+        // }
+
+        const PagesRemain = pages.map((page, index) =>                 
                     
                         <li key={index} className='item' onClick = {(event) => this.onPageClick(event,page)}>
                                     {page}
                         </li>                       
-                )
+                );
+
+        if(this.props.count < 20) {
+            return (
+                <li className='item active' onClick = {(event) => this.onPageClick(event,1)}>  1 </li>                 
             )
+        } else {
+            return (
+                <div className={`pageNoStart`}>
+                    <li className='item active' onClick = {(event) => this.onPageClick(event,1)}>  1 </li>  
+                    {PagesRemain}
+                </div>
+            )            
         }
     }
 }
 
 const mapStateToProps = (state) => {
-    //console.log(state);
+    console.log(state);
     return { count: state.products.data.count, 
              departmentId: state.products.departmentId,
              categoryId: state.products.categoryId,
@@ -122,4 +157,4 @@ const mapStateToProps = (state) => {
      };
 }
 
-export default connect(mapStateToProps, {selectProduct, selectProductFromCategory, selectProductFromDepartment })(Pagination);
+export default connect(mapStateToProps, {selectProduct, selectProductFromCategory, selectProductFromDepartment, selectCategory })(Pagination);

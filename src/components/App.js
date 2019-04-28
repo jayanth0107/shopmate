@@ -11,7 +11,7 @@ import Departments from './Departments';
 import { openModal } from "../actions";
 
 
-class App extends React.Component {
+class App extends React.Component {    
     
     render() {
         return (

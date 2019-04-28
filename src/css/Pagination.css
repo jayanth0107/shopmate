@@ -6,3 +6,8 @@
     color:white !important;
     background-color:#f30965 !important;
 }
+
+.pageNoStart {
+    display:'flex';
+    flex-direction:'row';
+}

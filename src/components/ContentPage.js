@@ -4,15 +4,17 @@ import Categories from './Categories';
 import ProductList from './ProductList';
 import Pagination from './Pagination';
 
+import '../css/ContentPage.css'
+
 const ContentPage = () => {
     return (
                 <div >                                             
                     
                     <div className={`ui pagination menu pageDiv`}>
                         <div className={`categoryText`}>Categories</div >
-                        <div className={`pageNoStart`}>
+                            <div className={`pageStart`}>
                                 <Pagination />
-                        </div>                        
+                            </div>                                             
                     </div>                   
 
                     <div className="ui grid">

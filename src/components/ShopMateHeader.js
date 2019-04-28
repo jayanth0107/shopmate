@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { addToCart } from '../actions';
 import { Button,  Form,  Grid,  Header,  Message,  Segment,  Modal} from "semantic-ui-react";
 
+import '../css/Header.css';
+
 class ShopMateHeader extends React.Component {
   constructor(props) {
     super(props);
@@ -43,7 +45,7 @@ class ShopMateHeader extends React.Component {
             <Link to="/shoppingCart" className="item">
               <i className={`shopping bag icon big headerIcon`}/>
               <span className={`floating ui red label cartNumber`} style={{marginLeft: '8% !important'}}>{this.props.cartItems.length}</span>              
-                Your Bag
+              <div className={`bagText`}>Your Bag</div>  
             </Link> 
           </div>
 
