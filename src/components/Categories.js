@@ -6,17 +6,15 @@ import '../css/Categories.css';
 class Categories extends React.Component {
     state = {};   
 
-    componentDidMount(){
-        
-        this.props.selectCategory();  
-
+        /* On component mount fire api call and load with categories */
+    componentDidMount(){        
+        this.props.selectCategory();
     }
 
+        /* Logic to maintain focus on the clicked Category element */ 
     onCategoryClick = (event, category_id) => {
-        //console.log(this.props);
         var siblings = [];
         var sibling = event.currentTarget.parentNode.firstChild;
-        //console.log(sibling);
         while (sibling) {
             if (sibling.nodeType === 1) {
                 siblings.push(sibling);
@@ -25,14 +23,11 @@ class Categories extends React.Component {
             sibling.className = 'item';
             sibling = sibling.nextSibling;
         }
-        //console.log(siblings);
-        //console.log(i);
         this.props.selectProductFromCategory(category_id,1);
         event.currentTarget.className = 'item active';
     }
 
     render(){  
-        //console.log(this.props.categories);
         return (
             this.props.categories.map(category => {
                 return(
@@ -45,8 +40,7 @@ class Categories extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {    
-    //console.log(state);
+const mapStateToProps = (state) => {   
     return {categories: state.categories};
 }
 

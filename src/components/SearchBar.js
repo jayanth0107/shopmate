@@ -3,7 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { searchProduct, selectProduct } from '../actions';
 
-class SearchBar extends React.Component {   
+class SearchBar extends React.Component { 
+    
+    constructor(props) {
+        super(props);
+        this.onSearchHandler = this.onSearchHandler.bind(this);
+     }
     
     onSearchHandler = (event) => {
         let term = event.target.value;   

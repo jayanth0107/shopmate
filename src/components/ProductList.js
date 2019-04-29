@@ -13,9 +13,10 @@ class ProductList extends React.Component {
     }
 
     componentDidMount(){
-        this.props.selectProduct(1); // 1 is the first page        
+        this.props.selectProduct(1); // 1 is the first page in the product api       
     } 
-    
+
+    /* Returns the products name and description information based on the user search term    */
     searchingFor(searchTerm){
         return function(x){
             return x.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -23,6 +24,7 @@ class ProductList extends React.Component {
         }
     }
 
+    /* Open Modal with the selected product card info  */
     openModal = (product) => {
         this.props.openModal({
             name: product.name, 
@@ -34,7 +36,7 @@ class ProductList extends React.Component {
         })
     }
 
-
+    /* Returns list of product cards to be displayed on the screen*/ 
     renderList(){ 
 
       const {search,products} = this.props;
@@ -73,6 +75,7 @@ class ProductList extends React.Component {
     }
 
     render(){
+        /* Generate keys and pass as attributes to avoid warnings from React */
         const generateKey = (pre) => {
             return `${ pre }_${ new Date().getTime() }`;
           }

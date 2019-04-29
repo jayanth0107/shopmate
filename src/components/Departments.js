@@ -8,10 +8,12 @@ import SearchBar from './SearchBar';
 class Departments extends React.Component {
     state = {data:'',pageInfo:''}; ; 
 
+        /* On component mount fire api call and load with departments */
     componentDidMount(){
         this.props.selectDepartment();
     }
 
+       /* Invoke actions to load Content Page component with Categories and Products based on the Department id clicked*/ 
     onDepartmentClick = (department_id) => {
         this.props.selectCategoryFromDepartment(department_id);   
         this.props.selectProductFromDepartment(department_id,1);
@@ -27,6 +29,7 @@ class Departments extends React.Component {
         })
     }
 
+    /* Returns logo text, departments bar and Search bar components*/ 
     render(){  
         return (
             <div className={`ui pointing menu departmentBar`} >

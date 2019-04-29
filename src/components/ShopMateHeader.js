@@ -181,7 +181,6 @@ class ShopMateHeader extends React.Component {
             </Modal.Content>
           </Modal>
 
-
       </div>
     );
   }

@@ -18,8 +18,6 @@ export default class AuthHelperMethods {
           }).catch(error => {
             return error;
           });
-        // if(res.data) 
-        //     this.setToken(res.data.accesstoken); // Setting the token in localStorage
         
         return Promise.resolve(res);      
     }
@@ -45,7 +43,6 @@ export default class AuthHelperMethods {
     }
 
     loggedIn = () => {
-        // Checks if there is a saved token and it's still valid
         const token = this.getToken() // Getting token from localstorage
         console.log('Token from local storage', token);
         return !!token  // handwaiving here , can check for Token expiry

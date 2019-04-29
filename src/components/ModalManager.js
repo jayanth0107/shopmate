@@ -15,7 +15,6 @@ export class ModalManager extends Component {
     super(props)
     this.state = { props: {} };
   }
-  //_isMounted = false;
 
   addItemToCart = (modalProps) => {
     let userColorSelected = '';
@@ -70,15 +69,7 @@ export class ModalManager extends Component {
 
   }
 
-  componentDidMount(){
-    //this._isMounted = true;
-  }
-
-  componentWillUnmount(){   
-    //this._isMounted = false;
-  }
-
-
+/* Configurable Modal to hold all product information, color, size and review information of the products */
   configureModal = (modalProps,defaultProps) => {
 
       const { attributes, reviews} = this.props;
@@ -187,6 +178,7 @@ export class ModalManager extends Component {
     </Modal>)
   }
 
+  
   render() {
     const { modalConfiguration} = this.props;
     const defaultProps = {

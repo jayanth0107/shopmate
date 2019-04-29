@@ -87,8 +87,6 @@ class ShoppingCart extends React.Component {
           }).catch(error => {
             return error;
           });
-        // if(res.data) 
-        //     this.setToken(res.data.accesstoken); // Setting the token in localStorage
         
         return Promise.resolve(res);      
     }
@@ -134,7 +132,6 @@ class ShoppingCart extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    //console.log(state);
     return  {cartItems: state.cart};
      
 }

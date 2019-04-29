@@ -12,7 +12,8 @@ class NewTopBar extends React.Component {
           if(this.props.warn === "false") {
             return null;
           }           
-         
+          
+          /* ITEMS TO SHOW WHEN USER LOGS IN*/
           return (  
           
               <div id='userMenu' className="ui secondary pointing menu">

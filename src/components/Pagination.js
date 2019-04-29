@@ -10,13 +10,16 @@ class Pagination extends React.Component {
         this.searchingFor = this.searchingFor.bind(this);
     }
     
+    // Returns the products name and description information based on the user search term
     searchingFor(term){
         return function(x){
             return x.name.toLowerCase().includes(term.toLowerCase()) || !term;
         }
     }    
 
-    onPageClick = (event, pageNo) => {    
+    /* Load the desired products from category and department based on the selected page number */
+    onPageClick = (event, pageNo) => { 
+
         var siblings = [];
         var sibling = event.currentTarget.parentNode.firstChild;
         while (sibling) {
@@ -27,15 +30,17 @@ class Pagination extends React.Component {
             sibling.className = 'item';
             sibling = sibling.nextSibling;
         }
-        //console.log(siblings);
+
         if(this.props.departmentId.length === 0 && this.props.categoryId.length === 0 ) {
             this.props.selectProduct(pageNo);
             event.currentTarget.className = 'item active';  
         }
+
         else if(this.props.departmentId.length > 0) {
             this.props.selectProductFromDepartment(this.props.departmentId, pageNo);
             event.currentTarget.className = 'item active'; 
         }
+
         else if(this.props.categoryId.length > 0) {
             this.props.selectProductFromCategory(this.props.categoryId, pageNo);
             event.currentTarget.className = 'item active'; 
@@ -44,12 +49,14 @@ class Pagination extends React.Component {
     }
 
     render(){ 
+
         const {search,products} = this.props;
         let  finalProductList = [];
 
-        const noOfProductsPerPage = 20;  // 20 product cards per page
+        const noOfProductsPerPage = 20;  // 20 product cards per page as default view
         let pageCount;
 
+        /* Have to load page nos dynamically based on search term component */
         if(search){
             pageCount = Math.ceil(this.props.count / noOfProductsPerPage);            
         }       
@@ -65,6 +72,8 @@ class Pagination extends React.Component {
                  finalProductList.length / noOfProductsPerPage
                );
         } 
+
+        /* Have to maintain focus on the first page on load and returns page nos dynamically*/
         
         let pages = [];
         for(let i=2 ; i<= pageCount; i++) {
