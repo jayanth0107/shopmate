@@ -104,7 +104,7 @@ class ShoppingCart extends React.Component {
                     <label className={`totalLabel`}>Total: {Number(totalPrice).toFixed(2)}</label>
                                           
                         <Link to="/shippingAddress" className="item">
-                            <button className={`ui right floated button orderButton`} onClick={e => this.placeOrder(e)}> PLACE ORDER </button> 
+                            <button className={`ui right floated button orderButton`}> PLACE ORDER </button> 
                         </Link>
                                     
                 </div>    
