@@ -67,6 +67,7 @@ export default class AuthHelperMethods {
     logout = () => {
         // Clear user token and profile data from localStorage
         localStorage.removeItem('id_token');
+        console.log('Token removed from local Storage');
     }
 
     

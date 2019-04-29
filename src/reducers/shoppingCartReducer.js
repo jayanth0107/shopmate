@@ -72,7 +72,7 @@ export default (state = [], action) => {
                           product.subtotal_price = 0.00;
                       }
                       else {
-                         product.discounted_price = Number(product.quantity*product.discounted_price).toFixed(2);                         
+                         product.subtotal_price = Number(product.quantity*product.discounted_price).toFixed(2);                         
                       }
                     }
                     return product;

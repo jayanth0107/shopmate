@@ -4,16 +4,17 @@ import { connect } from 'react-redux';
 import { addToCart, cartTotal } from '../actions';
 import { Button,  Form,  Grid,  Header,  Message,  Segment,  Modal, Label} from "semantic-ui-react";
 
-import '../css/Header.css';
+import '../css/ShopMateHeader.css';
 
 /* We want to import our 'AuthHelperMethods' component in order to send a login request */
 import AuthHelperMethods from './AuthHelperMethods';
 
+import NewTopBar from './NewTopBar';
 
 class ShopMateHeader extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: false, name: '', email : '', password: '', openRegister: false, msg:'' };
+    this.state = { open: false, name: '', email : '', password: '', openRegister: false, userLogIn: "false" };
     this.open = this.open.bind(this);
     this.openRegister = this.openRegister.bind(this);
     this.close = this.close.bind(this);
@@ -40,14 +41,6 @@ class ShopMateHeader extends React.Component {
   }  
 
 
-  componentDidMount() {
-    /* To redirect who is already logged in to the protected route */
-    //console.log(this.Auth.loggedIn());
-    // if (this.Auth.loggedIn())
-    //     this.props.history.replace('/');
-       //this.props.history.push('/d')
-  }
-
   /* Fired off every time the use enters something into the input fields */
   handleInputChange = (event) => {
     const { value, name } = event.target;
@@ -68,12 +61,12 @@ class ShopMateHeader extends React.Component {
                 document.getElementById('loginLabel').style.color = "green !important";
                 document.getElementById('loginLabel').style.fontWeight = 'bold';
                 document.getElementById('loginLabel').style.fontSize = '150%';
-                  //this.props.history.replace('/');
                  this.close();
+                 this.setState({userLogIn: "true"})
                  this.Auth.loggedIn();
                  console.log(response);
                  this.Auth.setToken(response.accessToken);
-                 
+                 document.getElementById('topLeftMenu').style.display = 'none';
             }
         })
         .catch(err => {
@@ -93,35 +86,45 @@ class ShopMateHeader extends React.Component {
                 document.getElementById('greenLabel').style.fontWeight = 'bold';
                 document.getElementById('greenLabel').style.fontSize = '150%';
             }
-            //this.props.history.replace('/');
         })
         .catch(err => {
             alert(err);
         })
     }
-  
+
+    fromNewBar = (e) => {
+        console.log('parent2child',e);
+        this.Auth.logout();
+        this.setState({userLogIn: e.toString()});
+        document.getElementById('topLeftMenu').style.display = 'block';
+    }
 
   render() {
     return (
-      <div> 
-                        {/* Left Menu of Header Bar */}
-          <div className="ui secondary pointing menu">
-            <div className={`headerText`}>Hi!  </div>
-            <button to="/" className={`item signIn`} onClick={this.open}>  Sign In  </button>
-            <div className={`headerText`}>or  </div>
-            <button to="/" className={`item register`} onClick={this.openRegister}>  Register  </button>  
+      <div id='topHeaderDiv'> 
 
-                        {/* Right Menu of Header Bar */}
-            <div className="right menu">
-              <Link to="/shoppingCart" className="item">
-                <i className={`shopping bag icon big headerIcon`}/>
-                <span className={`floating ui red label cartNumber`} style={{marginLeft: '8% !important'}}>
-                  {this.props.total.length}
-                </span>              
-                <div className={`bagText`}>Your Bag</div>  
-              </Link> 
-            </div>
-          </div>
+          <div id='guestBar'>                  
+                  <div id='guestMenu' className="ui secondary pointing menu">
+                          <NewTopBar warn={this.state.userLogIn} username={this.state.email} fromNewBar = {this.fromNewBar}/>
+                          <div id='topLeftMenu' className='guestLeftMenu' >
+                              <span className={`headerText`}>Hi!  </span>
+                              <button to="/" className={`item signIn`} onClick={this.open}>  Sign In  </button>
+                              <span className={`headerText`}>or  </span>
+                              <button to="/" className={`item register`} onClick={this.openRegister}>  Register  </button>
+                          </div>                          
+      
+                                      {/* Right Menu of Header Bar */}
+                          <div className="right menu">
+                            <Link to="/shoppingCart" className="item">
+                              <i className={`shopping bag icon big headerIcon`}/>
+                              <span className={`floating ui red label cartNumber`} style={{marginLeft: '8% !important'}}>
+                                {this.props.total.length}
+                              </span>              
+                              <div className={`bagText`}>Your Bag</div>  
+                            </Link> 
+                          </div>
+                  </div>   
+          </div>        
 
                         {/* Sign in Modal */}
           <Modal open={this.state.open} onClose={this.close}>

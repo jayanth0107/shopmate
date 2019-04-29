@@ -3,6 +3,8 @@
     font-weight: 800 !important;
     font-size: 15px;
     cursor: pointer;
+    float: left;
+    top: 10px;
 }
 
 .register {
@@ -10,11 +12,14 @@
     font-weight: 800 !important;
     font-size: 15px;
     cursor: pointer;
+    float: left;
+    top: 10px;
 }
 
 .headerText{
     padding-top: 21px;
     font-weight: bold;
+    float: left;
 }
 
 .headerIcon {
@@ -32,4 +37,8 @@
     height: 0px;
     margin-left: 11px;
     font-weight: bold;
+}
+
+.guestLeftMenu {
+    display:'inherit' !important;
 }

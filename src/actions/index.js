@@ -71,8 +71,8 @@ export function closeModal() {
     };
 };
 
-export const cartTotal = (IncDecOperator) => {
-    return {type: CART_TOTAL_COUNT, payload: IncDecOperator}
+export const cartTotal = (IncDecOperator, qty) => {
+    return {type: CART_TOTAL_COUNT, payload: IncDecOperator, qty: qty}
 }
 
 export const addToCart = (cart) => {

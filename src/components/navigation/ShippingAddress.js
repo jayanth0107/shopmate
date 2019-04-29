@@ -54,7 +54,7 @@ const ShippingAddress = () => {
                 
     </div>
   </div>
-  <h4 className="ui dividing header">Billing Information</h4>
+  <h4 className={`ui dividing header shippingHeader`}>Billing Information</h4>
         <div className="field">         
 
             <select className="ui fluid dropdown">

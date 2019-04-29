@@ -6,7 +6,7 @@ export default (state = [], action = {}) => {
         if(action.payload === 0) 
            return [];
         else if(action.payload === -1)
-           return state.slice(1);
+           return state.slice(Math.round(action.qty));
         else
           return [...state,  action.payload];
     }

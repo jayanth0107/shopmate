@@ -5,7 +5,7 @@ import ShoppingCart from './navigation/ShoppingCart';
 import ShippingAddress from './navigation/ShippingAddress';
 import ContentPage from './ContentPage';
 
-import '../css/Header.css';
+import '../css/ShopMateHeader.css';
 
 const RouterPage = () => (
     <main>

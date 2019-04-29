@@ -23,7 +23,7 @@ class ShoppingCart extends React.Component {
                                 <span className={`qtySpan`}>{cartItem.quantity}</span>
                                 <button className={`ui icon button incCart`} key={'inc'+index} onClick={(event) => this.increment(cartItem)}><i key={'plus'+index} className="plus icon"></i></button>
                             </td>
-                            <td key={'st'+index}>{cartItem.subtotal_price? cartItem.subtotal_price : cartItem.quantity*cartItem.discounted_price}</td>
+                            <td key={'st'+index}>{cartItem.subtotal_price? Number(cartItem.subtotal_price).toFixed(2) : Number(cartItem.quantity*cartItem.discounted_price).toFixed(2)}</td>
                         </tr>
                         )               
                 )
@@ -31,26 +31,26 @@ class ShoppingCart extends React.Component {
 
     increment = (cartItem) => {
 
-        this.props.cartTotal(1);
+        this.props.cartTotal(1,1);
         this.props.incrementQuantity(cartItem);  
     }
   
       decrement = (cartItem) => {
           
-        if(cartItem.quantity > 0) {
-            console.log('going to decrement',cartItem)            
-            this.props.cartTotal(-1);
+        if(cartItem.quantity > 0) {           
+            this.props.cartTotal(-1,1);
             this.props.decrementQuantity(cartItem);
         }
       }
   
       removeItem = (cartItem) => {
-        this.props.cartTotal(-1);
+
+        this.props.cartTotal(-1, cartItem.quantity);
         this.props.removeFromCart(cartItem);
       }
   
       emptyCart = () => {
-        this.props.cartTotal(0); 
+        this.props.cartTotal(0,1); 
         this.props.removeAllItemsFromCart();
       }
 

@@ -32,7 +32,7 @@ export class ModalManager extends Component {
 
       let resultObject = {...modalProps, color: userColorSelected, size: userSizeSelected, quantity:1};
       this.props.addToCart(resultObject);
-      this.props.cartTotal(1);
+      this.props.cartTotal(1,1);
     }
 
   }
