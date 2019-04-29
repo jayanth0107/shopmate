@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 import '../../css/ShippingAddress.css'
 
@@ -66,7 +67,7 @@ const ShippingAddress = () => {
         </div>
         <div className="fields">
             <div className="seven wide field">
-            <label>Card Number</label>
+            <label htmlFor="card-element">Card Number</label>
             <input type="text" name="card[number]" maxLength="16" placeholder="Card #"/>
             </div>
             <div className="three wide field">
@@ -98,10 +99,14 @@ const ShippingAddress = () => {
                 </div>
             </div>
             </div>
-        </div>
+        </div>        
    
    
-  <div className={`ui button shippingSubmit`} tabIndex="0">Submit Order</div>
+        <Link to="/billingAddress" className="item">
+            <div className={`ui button shippingSubmit`} tabIndex="0">Submit Order</div>
+        </Link>
+                        
+                        
 
 
 

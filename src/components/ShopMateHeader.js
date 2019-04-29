@@ -52,7 +52,7 @@ class ShopMateHeader extends React.Component {
     /* Upon clicking the login button, we will send our entered credentials over to the server for verification. 
        Once verified, store our token and send the protected route. */
         this.Auth.login(this.state.email, this.state.password)
-            .then(response => { console.log('onSubmit',response);
+            .then(response => { 
             if(response.toString().match(/Error/)) {
               document.getElementById('loginLabel').innerHTML = 'Email or Password is invalid. !!';
               document.getElementById('loginLabel').style.fontSize = '100%';
@@ -64,7 +64,6 @@ class ShopMateHeader extends React.Component {
                  this.close();
                  this.setState({userLogIn: "true"})
                  this.Auth.loggedIn();
-                 console.log(response);
                  this.Auth.setToken(response.accessToken);
                  document.getElementById('topLeftMenu').style.display = 'none';
             }
@@ -76,7 +75,7 @@ class ShopMateHeader extends React.Component {
 
     registerMessage = () => {
         this.Auth.register(this.state.name, this.state.email, this.state.password)
-        .then(res => { console.log('regMsg',res);
+        .then(res => { console.log(' *** Registration Msg ****',res);
             if(res.toString().match(/Error/)) {
                 document.getElementById('greenLabel').innerHTML = 'Registration Unsuccessful !!';
                 document.getElementById('greenLabel').style.fontSize = '100%';
@@ -93,7 +92,6 @@ class ShopMateHeader extends React.Component {
     }
 
     fromNewBar = (e) => {
-        console.log('parent2child',e);
         this.Auth.logout();
         this.setState({userLogIn: e.toString()});
         document.getElementById('topLeftMenu').style.display = 'block';
@@ -190,7 +188,6 @@ class ShopMateHeader extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  //console.log(state);
   return  {cartItems: state.cart, total: state.cartTotal};   
 }
 

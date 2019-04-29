@@ -26,7 +26,7 @@ class NewTopBar extends React.Component {
                         
                       <Link to="/shippingAddress" className="item"> <div className="item"><i className="user outline icon"></i>My Profile </div> </Link>
                           
-                      <div className="item" style={{bottom: '22px'}} onClick={() => this.props.fromNewBar("false")}><i className="sign-out alternate icon"></i>Logout </div> 
+                      <div className="item" style={{bottom: '22px', cursor: 'pointer'}} onClick={() => this.props.fromNewBar("false")}><i className="sign-out alternate icon"></i>Logout </div> 
                   </div>            
               
               </div>    

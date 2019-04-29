@@ -4,8 +4,6 @@ export default (state = [], action) => {
     
     switch(action.type) { 
             case 'ADD':
-                console.log('current state below');
-                console.log(state);
 
                 let partition1, partition2;
                 if(state.length > 0) {  
@@ -29,14 +27,8 @@ export default (state = [], action) => {
                 return [...state, action.payload];  
 
             case 'REMOVE':
-                  console.log(state);
-                  let pIndex = state.findIndex(product => _.isEqual(product,action.payload));
-                  console.log(action.payload);
-                  console.log('findex remove',pIndex)
-                  const pList = state.filter(item => !_.isEqual(item,action.payload))                 
-                   
-                    console.log('returned list',pList)
-                return pList;
+                  const pList = state.filter(item => !_.isEqual(item,action.payload));
+                  return pList;
 
             case 'REMOVEALL':
                 

@@ -89,6 +89,7 @@ export class ModalManager extends Component {
       }      
 
       const img = 'https://backendapi.turing.com/images/products/' + modalProps.thumbnail;
+      const imgF = 'https://raw.githubusercontent.com/zandoan/turing-frontend/master/Images/product_images/' + modalProps.thumbnail.replace('-thumbnail','-2');
      
       this.props.selectAttributes(modalProps.product_id);
       const colors = _.filter(this.props.attributes,['attribute_name', 'Color']); 
@@ -130,6 +131,7 @@ export class ModalManager extends Component {
       <Modal.Content image>                                    
         <div className={`imageDivModal`}>                                        
             <Image src={img} height="200" width="200"> </Image>  
+            <Image alt="orgImage" height="200" width="200" src={imgF} style={{position: 'relative', top: '200px'}}> </Image>  
         </div>
         
         <div className={`headerDivModal`} >                                    

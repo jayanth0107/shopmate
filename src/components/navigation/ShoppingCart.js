@@ -5,11 +5,14 @@ import { addToCart, removeFromCart, removeAllItemsFromCart, incrementQuantity, d
 
 import '../../css/ShoppingCart.css';
 import _ from 'lodash';
+import backendApi from '../../apis/backendApi';
+import AuthHelperMethods from '../AuthHelperMethods';
 
 class ShoppingCart extends React.Component {
 
+    Auth = new AuthHelperMethods();
+
     tableData = (cartItems) => {
-        console.log(cartItems);
         return (    cartItems.map((cartItem,index) =>
                         <tr key={cartItem.product_id}>
                             <td><button key={'rem'+index} className={`ui labeled icon button cartRemoveButton`}  onClick={(event) => this.removeItem(cartItem)}>
@@ -54,6 +57,42 @@ class ShoppingCart extends React.Component {
         this.props.removeAllItemsFromCart();
       }
 
+      placeOrder = (event) => {
+            event.preventDefault();
+            this.creatOrder(10,10,1).then(res => { console.log(' *** Created Order ****',res);
+                            if(res.toString().match(/Error/)) {
+                                alert('Access unauthorized');
+                            } else {
+                            
+                            }
+                        })
+                        .catch(err => {
+                            alert(err);
+                        });
+      }
+
+      creatOrder = async (cart_id, shipping_id, tax_id) => {
+        
+        // Get a token from api server using the post api
+        const data = "cart_id="+cart_id+"&shipping_id="+shipping_id+"&tax_id="+1;
+        const config = {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'user-key': this.Auth.getToken()
+            }
+        }
+        console.log(config);
+        const res = await backendApi.post(`/orders`,data, config).then(response => {
+            return response.data;
+          }).catch(error => {
+            return error;
+          });
+        // if(res.data) 
+        //     this.setToken(res.data.accesstoken); // Setting the token in localStorage
+        
+        return Promise.resolve(res);      
+    }
+
     render() {
         const {cartItems} = this.props;
         const totalPrice = _.sumBy(cartItems, function(s) {
@@ -67,7 +106,7 @@ class ShoppingCart extends React.Component {
                     <label className={`totalLabel`}>Total: {Number(totalPrice).toFixed(2)}</label>
                                           
                         <Link to="/shippingAddress" className="item">
-                            <button className={`ui right floated button orderButton`}> PLACE ORDER </button> 
+                            <button className={`ui right floated button orderButton`} onClick={e => this.placeOrder(e)}> PLACE ORDER </button> 
                         </Link>
                                     
                 </div>    
