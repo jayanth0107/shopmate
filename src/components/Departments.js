@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { selectDepartment, selectCategoryFromDepartment, selectProductFromDepartment } from '../actions';
 import '../css/Departments.css';
 import SearchBar from './SearchBar';
+import { Link } from "react-router-dom";
 
 
 class Departments extends React.Component {
@@ -33,9 +34,11 @@ class Departments extends React.Component {
     render(){  
         return (
             <div className={`ui pointing menu departmentBar`} >
-                <div className={`ui label logo`}>
-                    <h1 className={`logoText`}>SHOPMATE</h1>
-                </div>
+                <Link to="/" >
+                    <div className={`ui label logo`}>
+                        <h1 className={`logoText`}>SHOPMATE</h1>
+                    </div>
+                </Link>
                 <span className={`departmentText`}>
                     {this.renderList()}
                 </span>
