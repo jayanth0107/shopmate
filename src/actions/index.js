@@ -45,14 +45,14 @@ export const searchProduct = (searchTerm) => {
 };
 
 export const selectAttributes = id => dispatch => _selectAttributes(id, dispatch);
-      const _selectAttributes = _.memoize(async (id, dispatch) => {
+const _selectAttributes = _.memoize(async (id, dispatch) => {
       const response = await backendApi.get(`/attributes/inProduct/${id}`);
 
       dispatch({type: SELECTED_ATTRIBUTE,  payload: response.data });
 });
 
 export const selectReviews = id => dispatch => _selectReviews(id, dispatch);
-    const _selectReviews = _.memoize(async (id, dispatch) => {
+const _selectReviews = _.memoize(async (id, dispatch) => {
     const response = await backendApi.get(`/products/${id}/reviews`);
 
     dispatch({type: SELECTED_REVIEW, payload: response.data});

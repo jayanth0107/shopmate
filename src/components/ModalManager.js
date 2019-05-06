@@ -74,6 +74,8 @@ export class ModalManager extends Component {
 
       const { attributes, reviews} = this.props;
       const generateStars = (num) => {
+        if(num < 0)
+          num = 0;
         const a = [...Array(num).keys()];        
         return (
         <span>{a.map((num,index) => { return <i key={index} className={`fa fa-star starColor`}></i> } )} </span>)
