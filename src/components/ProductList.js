@@ -44,15 +44,11 @@ class ProductList extends React.Component {
 
       if(products !== undefined) {
 
-        //console.log("search",search.searchResults, "searchCount", search.searchResultsCount, "products", products)
+        /* For a no user search term or search empty return original results */
 
         if(search.searchResultsCount > 0) {
-           //const searchTerm =  search[search.length-1].searchTerm;
-            //finalProductList = products.filter(this.searchingFor(searchTerm));
             finalProductList = search.searchResults;
-
-
-        } else {
+        } else if(Object.keys(search).length === 0 || search.searchTerm.length === 0 || search.searchTerm.length === 1 ) {
             finalProductList = this.props.products;
         }
         
@@ -66,8 +62,13 @@ class ProductList extends React.Component {
                     <div className="content">
                         <div className={`center aligned header productName`}>{product.name}</div>                 
                         <div className={`ui tag labels priceDiv`}>
-                            <button className={`ui left large floated label priceTag`} style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: 'black'}}>${product.price}</button>
-                            <button className={`ui right large floated label discountPriceTag`}>${product.discounted_price}</button>
+                            { Number(product.discounted_price) === 0 ? (
+                                <button className={`ui left large floated label priceTag`}>${product.price}</button>
+                            ) : (
+                            <button className={`ui left large floated label priceTag`} 
+                                    style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: 'black'}}>${product.price}</button>
+                            )}
+                            <button className={`ui right large floated label discountPriceTag`}>{Number(product.discounted_price) === 0 ? product.price : product.discounted_price}</button>
                         </div>
                         <div className="description">
                             {product.description}

@@ -40,7 +40,7 @@ export default (state = [], action) => {
                 const productList = state.map((product,index) => {
                     if(index === productIndex) {
                       product.quantity +=1;
-                      product.subtotal_price = product.quantity*product.discounted_price;
+                      product.subtotal_price = product.quantity*(Number(product.discounted_price) === 0 ? product.price : product.discounted_price);
                       product.subtotal_price = Number(product.subtotal_price).toFixed(2);
                     }
                     return product;
@@ -55,16 +55,17 @@ export default (state = [], action) => {
                     if(index === prodIndex) {
                       product.quantity -=1;
                       if(product.subtotal_price && product.quantity > 1){
-                         product.subtotal_price = product.subtotal_price - product.discounted_price;  
+                         product.subtotal_price = product.subtotal_price - (Number(product.discounted_price) === 0 ? product.price : product.discounted_price);  
                          product.subtotal_price = Number(product.subtotal_price).toFixed(2);                       
-                      } else if(product.quantity === 1 && product.subtotal_price) {
-                          product.discounted_price = product.subtotal_price - product.discounted_price;
-                          product.subtotal_price = product.discounted_price;
-                      } else if(product.quantity === 0) {
-                          product.subtotal_price = 0.00;
+                      } 
+                      else if(product.quantity === 1 && product.subtotal_price) {
+                         product.subtotal_price = product.subtotal_price - (Number(product.discounted_price) === 0 ? product.price : product.discounted_price);                           
+                      } 
+                      else if(product.quantity === 0) {
+                         product.subtotal_price = 0.00;
                       }
                       else {
-                         product.subtotal_price = Number(product.quantity*product.discounted_price).toFixed(2);                         
+                         product.subtotal_price = Number(product.quantity*(Number(product.discounted_price) === 0 ? product.price : product.discounted_price)).toFixed(2);                         
                       }
                     }
                     return product;

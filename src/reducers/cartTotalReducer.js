@@ -1,6 +1,8 @@
 
 export default (state = [], action = {}) => {
+
   switch (action.type) {
+    
     case "CART_TOTAL_COUNT": { 
         if(action.payload === 0) 
            return [];

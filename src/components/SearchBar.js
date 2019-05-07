@@ -11,7 +11,7 @@ class SearchBar extends React.Component {
      }
     
     onSearchHandler = (event) => {
-        let term = event.target.value;   
+        let term = event.target.value;  
         this.props.searchProduct(term); 
     }
 

@@ -50,33 +50,18 @@ class Pagination extends React.Component {
 
     render(){ 
 
-        const {search,products} = this.props;
-        let  finalProductList = [];
-
+        const {search,products,productsCount} = this.props;
         const noOfProductsPerPage = 20;  // 20 product cards per page as default view
         let pageCount;
+
 
         /* Have to load page nos dynamically based on search term component */
         if(search.searchResultsCount > 0){
             pageCount = Math.ceil(search.searchResultsCount / noOfProductsPerPage);            
         }  
         else if(products){
-            pageCount = Math.ceil(
-                         products.length / noOfProductsPerPage
-                       );
-        }     
-        // else if(search[search.length-1].searchTerm> 0) {
-        //        const searchTerm =
-        //        search[search.length - 1].searchTerm;
-              
-        //        finalProductList = products.filter(
-        //          this.searchingFor(searchTerm)
-        //        );
-               
-        //        pageCount = Math.ceil(
-        //          finalProductList.length / noOfProductsPerPage
-        //        );
-        // } 
+            pageCount = Math.ceil(productsCount / noOfProductsPerPage);
+        }
 
         /* Have to maintain focus on the first page on load and returns page nos dynamically*/
         
@@ -85,14 +70,16 @@ class Pagination extends React.Component {
             pages.push(i);
         }
 
-        const PagesRemain = pages.map((page, index) =>                 
+        const PageNos = pages.map((page, index) =>                 
                     
                         <li key={index} className='item' onClick = {(event) => this.onPageClick(event,page)}>
                                     {page}
                         </li>                       
                 );
 
-        if(this.props.count < 20) {
+        /* To set focus on the first page number */        
+        
+        if(productsCount < 20) {
             return (
                 <li className='item active' onClick = {(event) => this.onPageClick(event,1)}>  1 </li>                 
             )
@@ -100,7 +87,7 @@ class Pagination extends React.Component {
             return (
                 <div className={`pageNoStart`}>
                     <li className='item active' onClick = {(event) => this.onPageClick(event,1)}>  1 </li>  
-                    {PagesRemain}
+                    {PageNos}
                 </div>
             )            
         }
@@ -108,11 +95,11 @@ class Pagination extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { count: state.products.data.count, 
+    return { productsCount: state.products.data.count, 
              departmentId: state.products.departmentId,
              categoryId: state.products.categoryId,
              products: state.products.data.rows,
-             search:state.search
+             search: state.search
      };
 }
 

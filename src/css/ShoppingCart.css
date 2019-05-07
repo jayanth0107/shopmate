@@ -34,3 +34,7 @@
     background-color: #f30965 !important;
 }
 
+.tableDiv {
+    overflow-y: scroll;
+    height: 35em;
+}

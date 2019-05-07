@@ -43,9 +43,7 @@ export const searchProduct = (searchTerm) => async dispatch => {
 
     const response = await backendApi.get(`/products/search?query_string=${searchTerm}`);
 
-    dispatch({type: SEARCH, payload: response.data.rows, searchCount: response.data.count});
-
-    //return {type: SEARCH,  searchTerm: searchTerm };
+    dispatch({type: SEARCH, payload: response.data.rows, searchCount: response.data.count, searchTerm: searchTerm});
 
 };
 
