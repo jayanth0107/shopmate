@@ -42,11 +42,16 @@ class ProductList extends React.Component {
       const {search,products} = this.props;
       let  finalProductList = [];
 
-      if(this.props.products !== undefined) {
+      if(products !== undefined) {
 
-        if( search && search.length > 0) {
-           const searchTerm =  search[search.length-1].searchTerm;
-            finalProductList = products.filter(this.searchingFor(searchTerm));
+        //console.log("search",search.searchResults, "searchCount", search.searchResultsCount, "products", products)
+
+        if(search.searchResultsCount > 0) {
+           //const searchTerm =  search[search.length-1].searchTerm;
+            //finalProductList = products.filter(this.searchingFor(searchTerm));
+            finalProductList = search.searchResults;
+
+
         } else {
             finalProductList = this.props.products;
         }

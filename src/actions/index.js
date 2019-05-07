@@ -39,9 +39,14 @@ export const selectProductFromCategory = (id, pageNo) => async dispatch => {
     dispatch({type: SELECTED_PRODUCT, payload: response.data, departmentId: '', cateogryId: `${id}`});
 };
 
-export const searchProduct = (searchTerm) => {
-    
-    return {type: SEARCH,  searchTerm: searchTerm };
+export const searchProduct = (searchTerm) => async dispatch => {    
+
+    const response = await backendApi.get(`/products/search?query_string=${searchTerm}`);
+
+    dispatch({type: SEARCH, payload: response.data.rows, searchCount: response.data.count});
+
+    //return {type: SEARCH,  searchTerm: searchTerm };
+
 };
 
 export const selectAttributes = id => dispatch => _selectAttributes(id, dispatch);

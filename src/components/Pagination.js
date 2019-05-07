@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../css/Pagination.css';
-import { selectProduct, selectProductFromCategory, selectProductFromDepartment, selectCategory } from '../actions';
+import { selectProduct, selectProductFromCategory, selectProductFromDepartment, selectCategory, searchProduct } from '../actions';
 
 class Pagination extends React.Component {
 
@@ -57,21 +57,26 @@ class Pagination extends React.Component {
         let pageCount;
 
         /* Have to load page nos dynamically based on search term component */
-        if(search){
-            pageCount = Math.ceil(this.props.count / noOfProductsPerPage);            
-        }       
-        else if(search[search.length-1].searchTerm> 0) {
-               const searchTerm =
-               search[search.length - 1].searchTerm;
+        if(search.searchResultsCount > 0){
+            pageCount = Math.ceil(search.searchResultsCount / noOfProductsPerPage);            
+        }  
+        else if(products){
+            pageCount = Math.ceil(
+                         products.length / noOfProductsPerPage
+                       );
+        }     
+        // else if(search[search.length-1].searchTerm> 0) {
+        //        const searchTerm =
+        //        search[search.length - 1].searchTerm;
               
-               finalProductList = products.filter(
-                 this.searchingFor(searchTerm)
-               );
+        //        finalProductList = products.filter(
+        //          this.searchingFor(searchTerm)
+        //        );
                
-               pageCount = Math.ceil(
-                 finalProductList.length / noOfProductsPerPage
-               );
-        } 
+        //        pageCount = Math.ceil(
+        //          finalProductList.length / noOfProductsPerPage
+        //        );
+        // } 
 
         /* Have to maintain focus on the first page on load and returns page nos dynamically*/
         
@@ -111,4 +116,4 @@ const mapStateToProps = (state) => {
      };
 }
 
-export default connect(mapStateToProps, {selectProduct, selectProductFromCategory, selectProductFromDepartment, selectCategory })(Pagination);
+export default connect(mapStateToProps, {selectProduct, selectProductFromCategory, selectProductFromDepartment, selectCategory, searchProduct })(Pagination);
