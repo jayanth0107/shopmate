@@ -14,29 +14,30 @@ class ShoppingCart extends React.Component {
 
     tableData = (cartItems) => {
 
-        return (    cartItems.map((cartItem,index) =>
-                        <tr key={cartItem.product_id}>
-                            <td><button key={'rem'+index} className={`ui labeled icon button cartRemoveButton`}  onClick={(event) => this.removeItem(cartItem)}>
-                                    <i key={'close'+index} className="close icon"></i>
-                                        Remove
-                                </button></td>   
-                            <td key={'im'+index}><img alt={'im'+index} src={'https://backendapi.turing.com/images/products/' + cartItem.thumbnail} /></td> 
-                            <td key={'thu'+index}><img alt={'thu'+index} src={'https://raw.githubusercontent.com/zandoan/turing-frontend/master/Images/product_images/' + cartItem.thumbnail.replace('-thumbnail','-2')} /></td> 
-                            <td key={'n'+index}>{cartItem.name}</td>
-                            <td>Color: {cartItem.color}, Size: {cartItem.size}</td>
-                            <td key={'p'+index}>{Number(cartItem.discounted_price) === 0 ? cartItem.price : cartItem.discounted_price}</td>
-                            <td><button className={`ui icon button decCart`} key={'dec'+index}
-                                        onClick={(event) => this.decrement(cartItem)}><i key={'min'+index} className="minus icon"></i></button>
-                                <span className={`qtySpan`}>{cartItem.quantity}</span>
-                                <button className={`ui icon button incCart`} key={'inc'+index} 
-                                        onClick={(event) => this.increment(cartItem)}><i key={'plus'+index} className="plus icon"></i></button>
-                            </td>
-                            <td key={'st'+index}>
-                                {cartItem.subtotal_price? Number(cartItem.subtotal_price).toFixed(2) : Number(cartItem.quantity*(Number(cartItem.discounted_price) === 0 ? cartItem.price : cartItem.discounted_price)).toFixed(2)}
-                            </td>
-                        </tr>
-                        )               
-                )
+        return (    
+            cartItems.map((cartItem,index) =>
+                <tr key={cartItem.product_id}>
+                    <td><button key={'rem'+index} className={`ui labeled icon button cartRemoveButton`}  onClick={(event) => this.removeItem(cartItem)}>
+                            <i key={'close'+index} className="close icon"></i>
+                                Remove
+                        </button></td>   
+                    <td key={'im'+index}><img alt={'im'+index} src={'https://backendapi.turing.com/images/products/' + cartItem.thumbnail} /></td> 
+                    <td key={'thu'+index}><img alt={'thu'+index} src={'https://raw.githubusercontent.com/zandoan/turing-frontend/master/Images/product_images/' + cartItem.thumbnail.replace('-thumbnail','-2')} /></td> 
+                    <td key={'n'+index}>{cartItem.name}</td>
+                    <td>Color: {cartItem.color}, Size: {cartItem.size}</td>
+                    <td key={'p'+index}>{Number(cartItem.discounted_price) === 0 ? cartItem.price : cartItem.discounted_price}</td>
+                    <td><button className={`ui icon button decCart`} key={'dec'+index}
+                                onClick={(event) => this.decrement(cartItem)}><i key={'min'+index} className="minus icon"></i></button>
+                        <span className={`qtySpan`}>{cartItem.quantity}</span>
+                        <button className={`ui icon button incCart`} key={'inc'+index} 
+                                onClick={(event) => this.increment(cartItem)}><i key={'plus'+index} className="plus icon"></i></button>
+                    </td>
+                    <td key={'st'+index}>
+                        {cartItem.subtotal_price? Number(cartItem.subtotal_price).toFixed(2) : Number(cartItem.quantity*(Number(cartItem.discounted_price) === 0 ? cartItem.price : cartItem.discounted_price)).toFixed(2)}
+                    </td>
+                </tr>
+                )               
+            )
     }
 
     increment = (cartItem) => {
@@ -68,20 +69,20 @@ class ShoppingCart extends React.Component {
             event.preventDefault();
             console.log('cartid', CartId)
             this.creatOrder(CartId,4,1).then(res => { 
-                            if(res.toString().match(/Error/)) {
-                                //alert('Access unauthorized');
-                                console.log('Access unauthorized, token expired');
-                                this.relogin();
-                            } else {
-                                console.log(' *** Created Order ****',res);
-                                console.log('Order id',res.orderId)
-                                this.props.sendOrderInfo(res.orderId, this.Auth.getToken())
-                            }
-                        })
-                        .catch(err => {
-                            //alert(err);
-                            console.log('Error in creating order');
-                        });
+                if(res.toString().match(/Error/)) {
+                    //alert('Access unauthorized');
+                    console.log('Access unauthorized, token expired');
+                    this.relogin();
+                } else {
+                    console.log(' *** Created Order ****',res);
+                    console.log('Order id',res.orderId)
+                    this.props.sendOrderInfo(res.orderId, this.Auth.getToken())
+                }
+            })
+            .catch(err => {
+                //alert(err);
+                console.log('Error in creating order');
+            });
             this.props.history.push('/shippingAddress');
     }
 
@@ -99,7 +100,6 @@ class ShoppingCart extends React.Component {
               'user-key': this.Auth.getToken()
             }
         }
-        console.log(config);
         const res = await backendApi.post(`/orders`,data, config).then(response => {
             return response.data;
           }).catch(error => {
@@ -118,20 +118,12 @@ class ShoppingCart extends React.Component {
         if(shoppingCartId.length > 0)
              CartId = shoppingCartId[0].cart_id;
 
-        console.log('CartId',CartId)
-
         return (
             <div className={`mainCartDiv`}>
                 <div className={`cartTopDiv`}>
                     <button className={`ui left floated button cartButton`} onClick={this.emptyCart}>EMPTY CART</button>
                     <label className={`totalLabel`}>Total: {Number(totalPrice).toFixed(2)}</label>
-                                          
-                        {/* <Link to="/shippingAddress" className="item" >
-                            <button className={`ui right floated button orderButton`} onClick={this.placeOrder}> PLACE ORDER </button> 
-                        </Link> */}
-
-                        <button className={`ui right floated button orderButton`} onClick={(e) => this.placeOrder(e,CartId)}> PLACE ORDER </button> 
-                                    
+                    <button className={`ui right floated button orderButton`} onClick={(e) => this.placeOrder(e,CartId)}> PLACE ORDER </button>                                     
                 </div> 
 
                 <div className={`tableDiv`}>

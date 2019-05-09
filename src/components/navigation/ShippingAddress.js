@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from 'redux-form'; //Field is a react component, reduxForm is a function same as connect function
 
 import '../../css/ShippingAddress.css';
+import backendApi from '../../apis/backendApi';
 
 /* We want to import our 'AuthHelperMethods' component in order to send a login request */
 import AuthHelperMethods from '../AuthHelperMethods';
@@ -25,14 +26,12 @@ const minValue18 = minValue(10)
 //   value && /.+@aol\.com/.test(value) ?
 //   'Really? You still use AOL for your email?' : undefined
 
-  const states = [ 'Please Select', 'US / Canada', 'Europe', 'Rest of World']
+  const countries = [ 'Please Select', 'US / Canada', 'Europe', 'Rest of World']
 
 class ShippingAddress extends React.Component {
 
     /* In order to utilize our authentication methods within the AuthService class, we want to instantiate a new object */
-    Auth = new AuthHelperMethods();
-
-    
+    Auth = new AuthHelperMethods();    
 
     renderError({error, touched}){
         if(touched && error){
@@ -55,11 +54,45 @@ class ShippingAddress extends React.Component {
         )
     }
 
+    renderSelectField = ({ input, label, type, meta, children }) => {
+        const className=`field ${meta.error && meta.touched ? 'error' : ''}`
+        return (
+            // <label>{label}</label>
+            <div className={className}>
+                <select {...input} placeholder={label} type={type} autoComplete="off">{children}</select>
+                {this.renderError(meta)}
+            </div>            
+        )
+    }
+
     onSubmit = (formValues) => {
-        //this.props.
+        
         console.log(formValues);
-        alert(JSON.stringify(formValues));
+        //;alert(JSON.stringify(formValues));
+        this.customerAddressUpdate(formValues)
         this.props.history.push('/billingAddress');
+    }
+
+    customerAddressUpdate = async (formValues) => {
+        
+        // Get a token from api server using the post api
+        const data = "address_1="+formValues.address_1+"&city="+formValues.city+"&region="+formValues.region+"&postal_code="+formValues.postal_code
+                            +"&country="+formValues.country+"&shipping_region_id="+Number(2);
+        const config = {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'user-key': this.Auth.getToken()
+            }
+        }
+        const res = await backendApi.put(`/customers/address`,data, config).then(response => {
+            console.log('Customer address updated', response.data)
+            return response.data;
+          }).catch(error => {
+            console.log('Customer address updation error', error)
+            return error;
+          });
+        
+        return Promise.resolve(res);      
     }
 
     
@@ -88,10 +121,10 @@ class ShippingAddress extends React.Component {
                         <label>Billing Address</label>                        
                         <div className="fields">                        
                              <div className="five wide field">
-                                <Field name="address-1" label="Full Address" type="text" component={this.renderField}/>
+                                <Field name="address_1" label="Full Address" type="text" component={this.renderField}/>
                              </div> 
                             <div className="four wide field">
-                                <Field name="address-2" label="Nearest LandMark / Street Address" type="text" component={this.renderField}/>
+                                <Field name="address_2" label="Nearest LandMark / Street Address" type="text" component={this.renderField}/>
                             </div>
                         </div>
                     </div>
@@ -114,9 +147,9 @@ class ShippingAddress extends React.Component {
                     <div className="three fields">
                         <div className="field">
                         <label>Shipping Regions</label>
-                        <Field name="state" component="select">
-                            {states.map(state =>
-                            <option value={state} key={state}>{state}</option>)}
+                        <Field name="country" component={this.renderSelectField}>
+                            {countries.map(country =>
+                            <option value={country} key={country}>{country}</option>)}
                         </Field>
                         </div>
                     </div>
@@ -129,13 +162,8 @@ class ShippingAddress extends React.Component {
                             </div>
                         </div>
                     </div>
-    
-                    {/* <Link to="/billingAddress" className="item">
-                        <button className={`ui button shippingSubmit`} tabIndex="0">Submit Order</button>
-                    </Link> */}
                     
                     <button className={`ui button shippingSubmit`} type="submit" tabIndex="0">Submit Order</button>
-
     
                 </form>
             </div>
@@ -166,7 +194,7 @@ const validate = (formValues) => {
 };
 
 const formWrapped = reduxForm({
-    form: 'UserProfile',
+    form: 'UserProfile', // a unique identifier for this form
     validate
 })(ShippingAddress);
 
