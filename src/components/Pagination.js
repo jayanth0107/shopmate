@@ -31,6 +31,8 @@ class Pagination extends React.Component {
             sibling = sibling.nextSibling;
         }
 
+        // Fire the corresponding api based on the page number clicked by user
+        
         if(this.props.departmentId.length === 0 && this.props.categoryId.length === 0 ) {
             this.props.selectProduct(pageNo);
             event.currentTarget.className = 'item active';  

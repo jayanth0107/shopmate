@@ -30,7 +30,8 @@ class StripePayment extends React.Component {
         const {elementFontSize} = this.state;
     
         return (
-            <StripeProvider apiKey="pk_test_nOzdmMn0pCPON26PXM0jBlNA00zSoTLhSP">
+            // <StripeProvider apiKey="pk_test_nOzdmMn0pCPON26PXM0jBlNA00zSoTLhSP">
+            <StripeProvider apiKey="pk_test_NcwpaplBCuTL6I0THD44heRe">
             
                 <div className={`mainBillingDiv`}>
                     

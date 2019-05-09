@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
-import { addToCart, removeFromCart, removeAllItemsFromCart, incrementQuantity, decrementQuantity, cartTotal } from '../../actions';
+import { addToCart, removeFromCart, removeAllItemsFromCart, incrementQuantity, decrementQuantity, cartTotal, cartId, sendOrderInfo } from '../../actions';
 
 import '../../css/ShoppingCart.css';
 import _ from 'lodash';
@@ -64,24 +64,35 @@ class ShoppingCart extends React.Component {
         this.props.removeAllItemsFromCart();
     }
 
-    placeOrder = (event) => {
+    placeOrder = (event, CartId) => {
             event.preventDefault();
-            this.creatOrder(10,10,1).then(res => { console.log(' *** Created Order ****',res);
+            console.log('cartid', CartId)
+            this.creatOrder(CartId,4,1).then(res => { 
                             if(res.toString().match(/Error/)) {
-                                alert('Access unauthorized');
+                                //alert('Access unauthorized');
+                                console.log('Access unauthorized, token expired');
+                                this.relogin();
                             } else {
-                            
+                                console.log(' *** Created Order ****',res);
+                                console.log('Order id',res.orderId)
+                                this.props.sendOrderInfo(res.orderId, this.Auth.getToken())
                             }
                         })
                         .catch(err => {
-                            alert(err);
+                            //alert(err);
+                            console.log('Error in creating order');
                         });
+            this.props.history.push('/shippingAddress');
+    }
+
+    relogin = () => {
+        alert('Please re-login');        
     }
 
     creatOrder = async (cart_id, shipping_id, tax_id) => {
         
         // Get a token from api server using the post api
-        const data = "cart_id="+cart_id+"&shipping_id="+shipping_id+"&tax_id="+1;
+        const data = "cart_id="+cart_id+"&shipping_id="+shipping_id+"&tax_id="+tax_id;
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
@@ -99,10 +110,15 @@ class ShoppingCart extends React.Component {
     }
 
     render() {
-        const {cartItems} = this.props;
+        const {cartItems, shoppingCartId} = this.props;
         const totalPrice = _.sumBy(cartItems, function(s) {
             return (Number(s.discounted_price) === 0 ? s.price : s.discounted_price)*s.quantity
         });
+        let CartId = '';
+        if(shoppingCartId.length > 0)
+             CartId = shoppingCartId[0].cart_id;
+
+        console.log('CartId',CartId)
 
         return (
             <div className={`mainCartDiv`}>
@@ -110,9 +126,11 @@ class ShoppingCart extends React.Component {
                     <button className={`ui left floated button cartButton`} onClick={this.emptyCart}>EMPTY CART</button>
                     <label className={`totalLabel`}>Total: {Number(totalPrice).toFixed(2)}</label>
                                           
-                        <Link to="/shippingAddress" className="item">
-                            <button className={`ui right floated button orderButton`}> PLACE ORDER </button> 
-                        </Link>
+                        {/* <Link to="/shippingAddress" className="item" >
+                            <button className={`ui right floated button orderButton`} onClick={this.placeOrder}> PLACE ORDER </button> 
+                        </Link> */}
+
+                        <button className={`ui right floated button orderButton`} onClick={(e) => this.placeOrder(e,CartId)}> PLACE ORDER </button> 
                                     
                 </div> 
 
@@ -144,8 +162,9 @@ class ShoppingCart extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return  {cartItems: state.cart};
+    console.log(state);
+    return  {cartItems: state.cart, shoppingCartId: state.cartId};
      
 }
 
-export default connect(mapStateToProps, { addToCart, removeFromCart, removeAllItemsFromCart, incrementQuantity, decrementQuantity, cartTotal })(ShoppingCart);
+export default withRouter(connect(mapStateToProps, { addToCart, removeFromCart, removeAllItemsFromCart, incrementQuantity, decrementQuantity, cartTotal, cartId, sendOrderInfo })(ShoppingCart));

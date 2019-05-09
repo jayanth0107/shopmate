@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
-import { addToCart, cartTotal } from '../actions';
+import { addToCart, cartTotal, setShippingAddress } from '../actions';
 import { Button,  Form,  Grid,  Header,  Message,  Segment,  Modal, Label} from "semantic-ui-react";
 
 import '../css/ShopMateHeader.css';
@@ -41,7 +41,7 @@ class ShopMateHeader extends React.Component {
   }  
 
 
-  /* Fired off every time the use enters something into the input fields */
+  /* Fired off every time the user enters value into the input fields */
   handleInputChange = (event) => {
     const { value, name } = event.target;
     this.setState({ [name]: value });
@@ -65,6 +65,7 @@ class ShopMateHeader extends React.Component {
                  this.setState({userLogIn: "true"})
                  this.Auth.loggedIn();
                  this.Auth.setToken(response.accessToken);
+                 //this.props.setShippingAddress();
                  document.getElementById('topLeftMenu').style.display = 'none';
             }
         })

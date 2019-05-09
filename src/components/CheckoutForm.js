@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
+import { connect } from "react-redux";
 import {CardElement, injectStripe} from 'react-stripe-elements';
+import {sendOrderInfo} from '../actions';
+import backendApi from '../apis/backendApi';
 
 const createOptions = (fontSize, padding) => {
     return {
@@ -22,25 +25,31 @@ const createOptions = (fontSize, padding) => {
   };
 
 class CheckoutForm extends Component {
+
   constructor(props) {
     super(props);
     this.state = {complete: false};
-    this.submit = this.submit.bind(this);
   }
 
-  async submit(ev) {
+  submit = async(ev, orderInfo) => {
     // User clicked submit
+    ev.preventDefault();
     let {token} = await this.props.stripe.createToken({name: "Name"});
-    let response = await fetch("/charge", {
-        method: "POST",
-        headers: {"Content-Type": "text/plain"},
-        body: token.id
-    });
-
-    if (response.ok) {
-        console.log("Purchase Complete!");
-        this.setState({complete: true, elementFontSize: window.innerWidth < 450 ? '14px' : '18px'})
+    const data = "stripeToken="+token.id+"&order_id="+orderInfo[0].order_id+"&description="+orderInfo[0].product_name+"&amount="+orderInfo[0].subtotal.replace('.','');
+    console.log('stripe pay click',data)
+    const config = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
     }
+    let response = await backendApi.post("/stripe/charge",data,config).then(response => {
+        console.log("Purchase Complete!", response);
+        this.setState({complete: true, elementFontSize: window.innerWidth < 450 ? '14px' : '18px'})
+        return response.data;
+    }).catch(error => {
+        console.log('Stripe Payment gateway error', error)
+        return error;
+    });
   }
 
   handleSubmit = (ev) => {
@@ -56,10 +65,14 @@ class CheckoutForm extends Component {
 
 
   render() {
-    if (this.state.complete) return <h1>Purchase Complete</h1>;
+    if (this.state.complete) {
+      return (
+            <h1 style={{color: 'green'}}>Purchase Complete <i class="check circle outline icon"></i></h1>
+            )
+    }
     return (
 
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={(e) => this.submit(e, this.props.orderInfo)}>
             <div>
                 <p>Would you like to complete the purchase?</p>
                 <label>
@@ -77,4 +90,9 @@ class CheckoutForm extends Component {
   }
 }
 
-export default injectStripe(CheckoutForm);
+function mapStateToProps(state) {
+  console.log('stripe page',state)
+  return { orderInfo: state.orderInfo[0] };
+}
+
+export default injectStripe(connect(mapStateToProps, {sendOrderInfo})(CheckoutForm));

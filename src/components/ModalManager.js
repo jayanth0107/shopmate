@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Header, Icon,  Modal } from "semantic-ui-react";
 
-import { closeModal, selectAttributes, selectReviews, addToCart, cartTotal } from "../actions";
+import { closeModal, selectAttributes, selectReviews, addToCart, cartTotal, cartId } from "../actions";
 import Image from 'react-image-resizer';
 import _ from 'lodash';
 
 import '../css/ModalManager.css';
 import Rating from 'react-rating';
+import backendApi from '../apis/backendApi';
 
 export class ModalManager extends Component {
 
@@ -29,12 +30,35 @@ export class ModalManager extends Component {
       if(document.getElementsByClassName('selectedSizeButton').length > 0)
           userSizeSelected = document.getElementsByClassName('selectedSizeButton')[0].value;
 
-      let resultObject = {...modalProps, color: userColorSelected, size: userSizeSelected, quantity:1};
+      let CartId = '';
+      if(this.props.shoppingCartId.length > 0)
+            CartId = this.props.shoppingCartId[0].cart_id;
+
+      let resultObject = {...modalProps, color: userColorSelected, size: userSizeSelected, quantity:1, cartid: CartId};
+      this.apiPostToCart(resultObject).then(res => {          
+          console.log('Added item to cart successfully',res);
+      }).catch(err => {
+          console.log('Error in adding item to cart',err);
+      });
       this.props.addToCart(resultObject);
       this.props.cartTotal(1,1);
     }
 
   }
+
+  apiPostToCart = async (resultObject) => {
+        
+    // Get a token from api server using the post api
+    const data = "cart_id="+resultObject.cartid+"&product_id="+resultObject.product_id+"&attributes="+resultObject.color+","+resultObject.size;
+    
+    const res = await backendApi.post(`/shoppingcart/add`, data).then(response => {
+        return response.data;
+      }).catch(error => {
+        return error;
+      });
+    
+    return Promise.resolve(res);      
+}
 
   addColorToCart = (event) => {
     
@@ -132,7 +156,7 @@ export class ModalManager extends Component {
 
             <div className={`priceDivModal`} style={{display:'flex', flexDirection:'row'}}>
                 <span className={`priceModal`}>  ${modalProps.price}   </span>
-                <span className={`discountedPriceModal`}>  ${modalProps.discounted_price} </span>
+                <span className={`discountedPriceModal`}> ${Number( modalProps.discounted_price ) === 0 ? modalProps.price : modalProps.discounted_price}</span>
             </div>
 
             <p className={`descriptionModal`}>{modalProps.description}</p>
@@ -201,7 +225,7 @@ export class ModalManager extends Component {
 }
 
 function mapStateToProps(state) {
-  return { modalConfiguration: state.modals, attributes: state.attributes, reviews: state.reviews };
+  return { modalConfiguration: state.modals, attributes: state.attributes, reviews: state.reviews, shoppingCartId: state.cartId };
 }
 
-export default connect(mapStateToProps, { closeModal, selectAttributes, selectReviews, addToCart, cartTotal })(ModalManager);
+export default connect(mapStateToProps, { closeModal, selectAttributes, selectReviews, addToCart, cartTotal, cartId })(ModalManager);

@@ -1,7 +1,8 @@
 import backendApi from '../apis/backendApi';
 import _ from 'lodash';
 import { SELECTED_CATEGORY , SELECTED_DEPARTMENT, SELECTED_PRODUCT, SEARCH, MODAL_OPEN, MODAL_CLOSE, 
-            SELECTED_ATTRIBUTE, SELECTED_REVIEW, ADD, REMOVE, REMOVEALL, INCREMENTQTY, DECREMENTQTY, CART_TOTAL_COUNT} from './types';
+            SELECTED_ATTRIBUTE, SELECTED_REVIEW, ADD, REMOVE, REMOVEALL, INCREMENTQTY, DECREMENTQTY, 
+            CART_TOTAL_COUNT, USERPROFILE, CART_ID, ORDER_ID} from './types';
 
 export const selectDepartment = () =>  async dispatch => {
     const response = await backendApi.get('/departments');
@@ -78,7 +79,22 @@ export const cartTotal = (IncDecOperator, qty) => {
     return {type: CART_TOTAL_COUNT, payload: IncDecOperator, qty: qty}
 }
 
-export const addToCart = (cart) => {
+export const cartId = () => async dispatch => {
+    const response = await backendApi.get('/shoppingcart/generateUniqueId');
+        
+    dispatch({type: CART_ID, payload: response.data });  
+}
+
+export const addToCart = (cart) =>  {
+
+    // const data = "email="+email+"&password="+password;
+    //     const config = {
+    //         headers: {
+    //           'Content-Type': 'application/x-www-form-urlencoded'
+    //         }
+    //     }
+    // const response = await backendApi.post('/shoppingcart/add');
+
     return {type: ADD, payload: cart};
 };
 
@@ -97,3 +113,22 @@ export const incrementQuantity = (cart) => {
 export const decrementQuantity = (cart) => {
     return {type: DECREMENTQTY, payload: cart};
 };
+
+export const setShippingAddress = () => async dispatch => {
+    // Get a token from api server using the post api
+    // const data = "email="+email+"&password="+password;
+    // const config = {
+    //     headers: {
+    //       'Content-Type': 'application/x-www-form-urlencoded'
+    //     }
+    // }
+    // const response = await backendApi.put('/customers/address', data, config);
+        
+    // dispatch({type: USERPROFILE, payload: response.data });
+}
+
+export const sendOrderInfo = (orderId, token) => async dispatch => {
+    const response = await backendApi.get(`/orders/${orderId}`, { headers: { 'user-key': token , 'Content-Type': 'application/x-www-form-urlencoded'}});
+        
+    dispatch({type: ORDER_ID, payload: response.data });  
+}

@@ -1,27 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectProduct, selectProductFromCategory, selectProductFromDepartment, searchProduct, openModal } from '../actions';
+import { selectProduct, selectProductFromCategory, selectProductFromDepartment, searchProduct, openModal, cartId } from '../actions';
 import '../css/ProductList.css';
 import ModalManager from './ModalManager';
 
 class ProductList extends React.Component {
     state = {data:[], depId:'', catId:'',isOpen: false}; 
 
-    constructor(props){
-        super(props);        
-        this.searchingFor = this.searchingFor.bind(this);
-    }
-
     componentDidMount(){
-        this.props.selectProduct(1); // 1 is the first page in the product api       
-    } 
-
-    /* Returns the products name and description information based on the user search term    */
-    searchingFor(searchTerm){
-        return function(x){
-            return x.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                    x.description.toLowerCase().includes(searchTerm.toLowerCase()) || !searchTerm;
-        }
+        this.props.selectProduct(1); // 1 is the first page in the product api               
+        this.props.cartId();
     }
 
     /* Open Modal with the selected product card info  */
@@ -33,7 +21,7 @@ class ProductList extends React.Component {
             discounted_price: product.discounted_price,
             thumbnail: product.thumbnail, 
             id: product.product_id
-        })
+        });
     }
 
     /* Returns list of product cards to be displayed on the screen*/ 
@@ -102,4 +90,4 @@ const mapStateToProps = (state) => {
      
 }
 
-export default connect(mapStateToProps, { selectProduct, selectProductFromCategory, selectProductFromDepartment, searchProduct, openModal })(ProductList);
+export default connect(mapStateToProps, { selectProduct, selectProductFromCategory, selectProductFromDepartment, searchProduct, openModal, cartId })(ProductList);
